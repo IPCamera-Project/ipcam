@@ -1,0 +1,15 @@
+IPCAM-VIDEO-STREAMING-API/.idea/
+IPCAM-VIDEO-STREAMING-API/IPCAM-VIDEO-STREAMING-API.iml
+IPCAM-VIDEO-STREAMING-API/kh.com.kshrd.ipcam.iml
+IPCAM-VIDEO-STREAMING-API/src/main/resources/templates/
+IPCAM-VIDEO-STREAMING-API/target/
+core/src/main/resources/
+core/src/test/
+core/target/generated-sources/
+hikvision/src/test/
+hikvision/target/generated-sources/
+vivotek/src/test/
+vivotek/target/generated-sources/
+/plugins/
+hikvision/target/hikvision-0.0.1-SNAPSHOT.jar
+vivotek/target/vivotek-0.0.1-SNAPSHOT.jar

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3219d815-6265-4f2e-92ad-216a0cdd1c5d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamCommandController.java" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamCommandController.java" />
-    </list>
+    <list default="true" id="3219d815-6265-4f2e-92ad-216a0cdd1c5d" name="Default" comment="" />
     <ignored path="kh.com.kshrd.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/hikvision/target/" />
@@ -28,7 +26,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="IPCamCommandController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IPCamCommandController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamCommandController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="283">
@@ -69,6 +67,16 @@
                 <element signature="e#1054#1055#0" expanded="true" />
                 <element signature="e#1122#1123#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -123,16 +131,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IPCamRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/repository/IPCamRepository.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -179,10 +177,10 @@
         <option value="$PROJECT_DIR$/vivotek/pom.xml" />
         <option value="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/repository/IPCamRepository.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/utils/StringUtils.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/runner.sh" />
         <option value="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/plugin/PluginLoadClass.java" />
         <option value="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamCommandController.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -439,6 +437,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="FullScreen" value="true" />
+    <property name="prop_add_unversioned_files" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -993,12 +992,12 @@
       <updated>1482375865012</updated>
       <workItem from="1482375866270" duration="282000" />
       <workItem from="1482377160102" duration="8706000" />
-      <workItem from="1482395183859" duration="9047000" />
+      <workItem from="1482395183859" duration="9128000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18035000" />
+    <option name="totallyTimeSpent" value="18116000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -1512,14 +1511,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vivotek/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1567,6 +1558,14 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
