@@ -3,13 +3,7 @@ package kh.com.kshrd.ipcam.repository;
 import java.util.ArrayList;
 
 import kh.com.kshrd.ipcam.entity.camera.IPCam;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -29,6 +23,7 @@ public interface IPCamRepository {
 	final String INSERT_CAMERA			=	"INSERT INTO tbl_camera "
 											+ "(name,serial_number,ip_address,web_port,rtsp_port,username,password,stream_url,model_id,user_id) "
 											+ "VALUES(#{NAME},#{SERIAL_NUMBER},#{IP_ADDRESS},#{WEB_PORT},#{RTSP_PORT},#{USERNAME},#{PASSWORD},#{STREAM_URL},#{MODEL_ID},#{USER_ID})";
+
 
 
 	@Select(IPCamRepository.GET_ALL_CAMERA)
@@ -74,7 +69,11 @@ public interface IPCamRepository {
 	@Insert(IPCamRepository.INSERT_CAMERA)
 	boolean insertCamera(IPCam ipCam);
 
-
+	@Select("SELECT tc.*, tu.* FROM tbl_camera tc LEFT JOIN tbl_user tu ON tc.user_id = tu.user_id WHERE tu.user_id = #{userId} AND tu.active = 1 AND tc.active = 1 AND tc.camera_id = #{camId}")
+	@Results({
+			@Result(property="model", column="model_id", one = @One(select = "kh.com.kshrd.ipcam.repository.ModelRepository.findOne"))
+	})
+	IPCam getCamByUserId(@Param("userId") int userId, @Param("camId") int camId );
 
 
 }

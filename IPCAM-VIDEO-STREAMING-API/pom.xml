@@ -144,9 +144,14 @@
 			<version>4.5.2</version>
 
 		</dependency>
+        <dependency>
+            <groupId>kh.com.kshrd</groupId>
+            <artifactId>kh.com.kshrd.core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<pluginManagement>

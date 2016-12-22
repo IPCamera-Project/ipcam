@@ -2,24 +2,28 @@ package kh.com.kshrd.ipcam.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import kh.com.kshrd.ipcam.entity.camera.base.BaseEntity;
-
-public class User extends BaseEntity{
+public class User{
 
 	@JsonProperty("USER_ID")
 	private  int user_id;
 
 	@JsonProperty("USERNAME")
 	protected String username;
-	
+
+	@JsonProperty("EMAIL")
+	private String email;
+
 	@JsonProperty("PASSWORD")
 	protected String password;
-	
+
 	@JsonProperty("IMAGE")
 	protected String image;
-	
+
 	@JsonProperty("STATUS")
 	protected boolean status;
+
+	@JsonProperty("ROLE")
+	private  Role role;
 
 	public int getUser_id() {
 		return user_id;
@@ -62,6 +66,11 @@ public class User extends BaseEntity{
 		this.status = status;
 	}
 
-	
-	
+	public String getEmail() {return email;}
+
+	public void setEmail(String email) {this.email = email;}
+
+	public Role getRole() {return role;}
+
+	public void setRole(Role role) {this.role = role;}
 }

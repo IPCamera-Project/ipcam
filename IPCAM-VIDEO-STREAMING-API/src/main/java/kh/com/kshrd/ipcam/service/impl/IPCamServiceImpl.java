@@ -41,4 +41,9 @@ public class IPCamServiceImpl implements IPCamService {
     public boolean save(IPCam object) {
         return false;
     }
+
+    @Override
+    public IPCam getCamOnce(int userId, int camId) {
+        return ipCamRepository.getCamByUserId(userId, camId);
+    }
 }

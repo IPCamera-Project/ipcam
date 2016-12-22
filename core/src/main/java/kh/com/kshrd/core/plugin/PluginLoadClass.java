@@ -27,29 +27,21 @@ public class  PluginLoadClass extends URLClassLoader{
         super.addURL(url);
     }
 
-    /**
-     * This implementation of loadClass uses a child first delegation model rather than the standard parent first.
-     * If the requested class cannot be found in this class loader, the parent class loader will be consulted
-     * via the standard PluginLoadClass.loadClass(String) mechanism.
-     */
     @Override
     public Class<?> loadClass(String className) throws ClassNotFoundException {
         synchronized (getClassLoadingLock(className)) {
             log.trace("Received request to load class '{}'", className);
-            // if the class it's a part of the plugin engine use parent class loader
             if (className.startsWith(PLUGIN_PACKAGE_PREFIX)) {
                 log.trace("Delegate the loading of class '{}' to parent", className);
                 try {
                     return getClass().getClassLoader().loadClass(className);
                 } catch (ClassNotFoundException e) {
                     // try next step
-                    // TODO if I uncomment below lines (the correct approach) I received ClassNotFoundException for demo (ro.fortsoft.pf4j.demo)
                     //                log.error(e.getMessage(), e);
                     //                throw e;
                 }
             }
 
-            // second check whether it's already been loaded
             Class<?> clazz = findLoadedClass(className);
             if (clazz != null) {
                 log.trace("Found loaded class '{}'", className);
@@ -72,13 +64,6 @@ public class  PluginLoadClass extends URLClassLoader{
         }
     }
 
-    /**
-     * Load the named resource from this plugin. This implementation checks the plugin's classpath first
-     * then delegates to the parent.
-     *
-     * @param name the name of the resource.
-     * @return the URL to the resource, <code>null</code> if the resource was not found.
-     */
     @Override
     public URL getResource(String name) {
         log.trace("Trying to find resource '{}' in plugin classpath", name);
@@ -98,12 +83,6 @@ public class  PluginLoadClass extends URLClassLoader{
         return super.findResource(name);
     }
 
-    /**
-     * Release all resources acquired by this class loader.
-     * The current implementation is incomplete.
-     * For now, this instance can no longer be used to load
-     * new classes or resources that are defined by this loader.
-     */
     public void dispose() {
         try {
             close();

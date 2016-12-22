@@ -8,8 +8,10 @@ public class Model extends BaseEntity{
 
 	@JsonProperty("MODEL_ID")
 	private int model_id;
+
 	@JsonProperty("VENDER")
 	private Vender vender;
+
 	@JsonProperty("NAME")
 	private String name;
 	@JsonProperty("VENDOR_ID")
@@ -21,7 +23,7 @@ public class Model extends BaseEntity{
 	private Plugin plugin;
 
 	@JsonProperty("PLUGIN_ID")
-	private String plugin_id;
+	private int plugin_id;
 
 	public int getModel_id() {
 		return model_id;
@@ -63,11 +65,11 @@ public class Model extends BaseEntity{
 		this.vender_id = vender_id;
 	}
 
-	public String getPlugin_id() {
+	public int getPlugin_id() {
 		return plugin_id;
 	}
 
-	public void setPlugin_id(String plugin_id) {
+	public void setPlugin_id(int plugin_id) {
 		this.plugin_id = plugin_id;
 	}
 

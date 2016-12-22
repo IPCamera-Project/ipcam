@@ -2,9 +2,9 @@
 
 mvn clean install -DskipTests=true
 
-mkdir plugins
+mkdir IPCAM-VIDEO-STREAMING-API/plugins
 
-cp hikvision/target/*.jar plugins/
-cp vivotek/target/*.jar plugins/
+cp hikvision/target/*.jar IPCAM-VIDEO-STREAMING-API/plugins/
+cp vivotek/target/*.jar IPCAM-VIDEO-STREAMING-API/plugins/
 cd -
 

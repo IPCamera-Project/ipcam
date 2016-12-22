@@ -3,7 +3,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import kh.com.kshrd.ipcam.entity.camera.base.BaseEntity;
 import kh.com.kshrd.ipcam.entity.user.User;
 
-public class IPCam extends BaseEntity {
+public class IPCam {
 	
 	@JsonProperty("SERIAL_NUMBER")
 	private String serial_number;

@@ -30,7 +30,7 @@ public interface ModelRepository {
 			@Result(property="vender_id", column="vender_id"),
 			@Result(property="logo", column="logo"),
 			@Result(property="vender",column = "vender_id", one = @One(select = "kh.com.kshrd.ipcam.repository.VenderRepository.getVenderById")),
-			@Result(property="vender",column = "vender_id", one = @One(select = "kh.com.kshrd.ipcam.repository.PluginRepository.getPluginById"))
+			@Result(property="plugin",column = "plugin_id", one = @One(select = "kh.com.kshrd.ipcam.repository.PluginRepository.getPluginById"))
 
 	})
 	Model findOne(@Param("model_id") int model_id);
