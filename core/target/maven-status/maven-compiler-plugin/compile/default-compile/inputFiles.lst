@@ -1,6 +1,7 @@
 /Users/sophatvathana/Desktop/ipcam/core/src/main/java/kh/com/kshrd/core/StreamConsumer.java
 /Users/sophatvathana/Desktop/ipcam/core/src/main/java/kh/com/kshrd/core/plugin/IPropertiesDetector.java
 /Users/sophatvathana/Desktop/ipcam/core/src/main/java/kh/com/kshrd/core/plugin/PluginLoader.java
+/Users/sophatvathana/Desktop/ipcam/core/src/main/java/kh/com/kshrd/core/utils/Tuple.java
 /Users/sophatvathana/Desktop/ipcam/core/src/main/java/kh/com/kshrd/core/utils/FileManager.java
 /Users/sophatvathana/Desktop/ipcam/core/src/main/java/kh/com/kshrd/core/plugin/PluginDescription.java
 /Users/sophatvathana/Desktop/ipcam/core/src/main/java/kh/com/kshrd/core/Transformer.java

@@ -26,6 +26,7 @@ kh/com/kshrd/core/plugin/PluginLoader.class
 kh/com/kshrd/core/plugin/PluginPath.class
 kh/com/kshrd/core/utils/DirectoryFile.class
 kh/com/kshrd/core/utils/JarFileAccept.class
+kh/com/kshrd/core/utils/Tuple.class
 kh/com/kshrd/core/ExternalBase.class
 kh/com/kshrd/core/RtspStream.class
 kh/com/kshrd/core/plugin/PluginStateEvent.class

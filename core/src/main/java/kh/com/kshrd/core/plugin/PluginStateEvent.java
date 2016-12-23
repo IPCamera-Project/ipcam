@@ -22,7 +22,7 @@ public interface PluginStateEvent {
 
 	String getRtsp();
 
-	void setConnection(String host, int port, String user,String pass);
+	void setConnection(String host, int port, int rstpPort, String user,String pass);
 
 
 }

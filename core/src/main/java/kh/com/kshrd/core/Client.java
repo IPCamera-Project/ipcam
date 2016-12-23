@@ -27,7 +27,7 @@ public class Client{
             Transformer transformer = new Transformer(pluginLoadClass);
             PluginStateEvent pluginStateEvent = transformer.newInstance();
             System.out.println("asdsadasdasdas");
-            pluginStateEvent.setConnection("192.168.0.27", 80, "admin", "12345");
+            pluginStateEvent.setConnection("192.168.0.27", 80, 256, "admin", "12345");
             System.out.println(pluginStateEvent.helloWorld());
             for (int i = 0; i < 40; i++) {
                 try {
@@ -54,7 +54,7 @@ public class Client{
             Transformer transformer = new Transformer(pluginLoadClass);
             PluginStateEvent pluginStateEvent = transformer.newInstance();
             System.out.println("asdsadasdasdas");
-            pluginStateEvent.setConnection("192.168.0.45", 80, "root", "pass");
+            pluginStateEvent.setConnection("192.168.0.45", 80, 256, "root", "pass");
             System.out.println(pluginStateEvent.helloWorld());
             for (int i = 0; i < 40; i++) {
                 try {

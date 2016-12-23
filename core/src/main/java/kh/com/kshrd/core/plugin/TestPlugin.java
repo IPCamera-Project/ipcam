@@ -18,7 +18,7 @@ public class TestPlugin {
         ClassLoader authorizedLoader = URLClassLoader.newInstance(new URL[] { authorizedJarFile.toURL() });
         PluginStateEvent authorizedPluginStateEvent = (PluginStateEvent) authorizedLoader.loadClass("kh.com.kshrd.hikvision.ServiceProvider").newInstance();
         authorizedPluginStateEvent.run();
-        authorizedPluginStateEvent.setConnection("http://192.168.0.1",80,"Admin","12345");
+        authorizedPluginStateEvent.setConnection("http://192.168.0.1",80, 256, "Admin","12345");
         System.out.println(authorizedPluginStateEvent.helloWorld());
     }
 

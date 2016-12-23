@@ -15,8 +15,7 @@ public class RtspCamera extends IpCamera implements Runnable {
     private Thread       rtspThread;
     private boolean      rtspContinue;
 
-    public RtspCamera(String vendor, String model, String host, int webPort, String user, String pass, int rtspPort, String rtspPath,
-                      Class cls) {
+    public RtspCamera(String vendor, String model, String host, int webPort, String user, String pass, int rtspPort, String rtspPath) {
         this.setVendorName(vendor);
         this.setModelName(model);
         this.setRtspPath(rtspPath);
@@ -26,23 +25,23 @@ public class RtspCamera extends IpCamera implements Runnable {
         setUser(user);
         setPass(pass);
 
-        if (cls != null) {
-            ICommand p;
-
-            try {
-                p = (ICommand) cls.newInstance();
-                p.setConnection(host, webPort, user, pass);
-
-                setPtzInterface(p);
-            } catch (InstantiationException e) {
-                logger.warn(e.getMessage());
-            } catch (IllegalAccessException e) {
-                logger.warn(e.getMessage());
-            }
-        }
-        else {
-            logger.info("{}:{} ptz not set", model, host);
-        }
+//        if (cls != null) {
+//            ICommand p;
+//
+//            try {
+//                p = (ICommand) cls.newInstance();
+//                p.setConnection(host, webPort, user, pass);
+//
+//                setPtzInterface(p);
+//            } catch (InstantiationException e) {
+//                logger.warn(e.getMessage());
+//            } catch (IllegalAccessException e) {
+//                logger.warn(e.getMessage());
+//            }
+//        }
+//        else {
+//            logger.info("{}:{} ptz not set", model, host);
+//        }
     }
 
     public RtspStream getRtspStream() {

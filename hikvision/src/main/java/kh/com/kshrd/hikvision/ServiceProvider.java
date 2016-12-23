@@ -22,15 +22,18 @@ public class ServiceProvider extends Command {
     private int port;
     private String user;
     private String pass;
+    private int rstpPort;
     CloseableHttpClient httpclient;
     private static int counter = 0;
     private final static int FLAG_COUNTER = 1;
     @Override
-    public void setConnection(String host, int port, String user, String pass) {
+    public void setConnection(String host, int port, int rstpPort, String user,String pass) {
         this.host = host;
         this.port = port;
         this.user = user;
         this.pass = pass;
+        this.rstpPort = rstpPort;
+
         if (user != null && user.length() > 0) {
 
             CredentialsProvider credsProvider = new BasicCredentialsProvider();
@@ -171,6 +174,6 @@ public class ServiceProvider extends Command {
 
     @Override
     public String getRtsp() {
-        return "rstp://hshahhsa.com/adadas.mp4";
+        return String.format("rstp://%s:%s/Streaming/Channels/10%d", this.host, this.rstpPort ,1);
     }
 }

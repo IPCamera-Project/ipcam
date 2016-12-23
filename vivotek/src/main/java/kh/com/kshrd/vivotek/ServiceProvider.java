@@ -96,7 +96,7 @@ public class ServiceProvider extends Command {
     }
 
     @Override
-    public void setConnection(String host, int port, String user, String pass) {
+    public void setConnection(String host, int port, int rstpPort, String user, String pass) {
         this.host = host;
         this.user = user;
         this.pass = pass;

@@ -37,5 +37,5 @@ public abstract class Command implements PluginStateEvent {
         return null;
     }
 
-    public abstract void setConnection(String host, int port, String user,String pass);
+    public abstract void setConnection(String host, int port, int rstpPort, String user,String pass);
 }
