@@ -34,7 +34,7 @@ import java.io.OutputStream;
 
 /**
  * 
- * @author Chen Rina
+ * @author Chen Rina, sophatvathana
  *
  */
 
