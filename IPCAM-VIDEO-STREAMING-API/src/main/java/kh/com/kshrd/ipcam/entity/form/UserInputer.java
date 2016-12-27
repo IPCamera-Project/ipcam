@@ -20,6 +20,9 @@ public class UserInputer {
     @JsonProperty("IMAGE")
     protected String image;
 
+    @JsonProperty("ROLE_ID")
+    protected  int role_id;
+
     public String getUsername() {
         return username;
     }
@@ -47,4 +50,12 @@ public class UserInputer {
     public String getEmail() {return email;}
 
     public void setEmail(String email) {this.email = email;}
+
+    public int getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
+    }
 }

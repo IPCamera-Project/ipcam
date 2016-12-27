@@ -6,8 +6,8 @@ import kh.com.kshrd.ipcam.respone.Response;
 import kh.com.kshrd.ipcam.respone.ResponseCode;
 import kh.com.kshrd.ipcam.respone.ResponseMessage;
 import kh.com.kshrd.ipcam.respone.ResponseObject;
+import kh.com.kshrd.ipcam.service.UserDetailService;
 import kh.com.kshrd.ipcam.service.UserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -15,9 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -33,6 +31,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	UserDetailService userDetailService;
 
 	@Autowired
 	Environment environment;
@@ -68,7 +68,19 @@ public class UserController {
 	@GetMapping("/getUserByEmail")
 	ResponseObject<User> getUserByEmail(@RequestParam("email") String email){
 		ResponseObject<User> userResponseObject = new ResponseObject<>();
-		userResponseObject.setData(userService.getUserByEmail(email));
+		User user = userService.getUserByEmail(email);
+
+		userResponseObject.setData(user);
+
+		BufferedInputStream stream = null;
+		try {
+			stream = new BufferedInputStream(new FileInputStream(user.getImage()));
+			System.out.print("gogogogo---->"+stream);
+			stream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		if(userResponseObject!=null	){
 			userResponseObject.setCode(ResponseCode.QUERY_FOUND);
 			userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
@@ -81,28 +93,20 @@ public class UserController {
 
 
 	@PostMapping("/addUser")
-	Response adduser(@RequestParam("USERNAME") String username
-			, @RequestParam("EMAIL") String email
-			, @RequestParam("PASSWORD") String password
-			, @RequestParam("IMAGE")MultipartFile multipartFile
-	){
+	Response adduser(@RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email
+			       , @RequestParam("PASSWORD") String password, @RequestParam("IMAGE")MultipartFile multipartFile,
+					 @RequestParam("ROLE_ID")  int role_id){
 
 		Response response = new Response();
 
-		String filename = multipartFile.getOriginalFilename();
-		String[] output = filename.split("\\.");
-
-		String nameGenerator = UUID.randomUUID()+"."+output[1];
-		nameGenerator = nameGenerator+"";
-		String directory = environment.getProperty("file.upload.path");
-		String filepath = Paths.get(directory, nameGenerator).toString();
+		String genName =	fileNameGen(fileNameGen(multipartFile.getOriginalFilename()));
 
 		UserInputer userInputer = new UserInputer();
-
-		userInputer.setUsername(username);
-		userInputer.setEmail(email);
-		userInputer.setPassword(password);
-		userInputer.setImage(filepath);
+			userInputer.setUsername(username);
+			userInputer.setEmail(email);
+			userInputer.setPassword(password);
+			userInputer.setImage(genName);
+			userInputer.setRole_id(role_id);
 
 		if(userService.addUser(userInputer)){
 			response.setCode(ResponseCode.INSERT_SUCCESS);
@@ -113,6 +117,7 @@ public class UserController {
 				stream = new BufferedOutputStream(new FileOutputStream(filepath));
 				stream.write(multipartFile.getBytes());
 				stream.close();
+				userDetailService.insertRole(userDetailService.getLastId(),userInputer.getRole_id());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -123,23 +128,17 @@ public class UserController {
 		return response;
 	}
 
+
+
 	@PutMapping("/updateUserImage")
 	public Response updateUserImage(@RequestParam("IMAGE")MultipartFile multipartFile,
 									@RequestParam("USER_ID")int user_id){
 
 		Response response = new Response();
-
-
-		String   filename = multipartFile.getOriginalFilename();
-		String[] output = filename.split("\\.");//split string specific "."
-		String randomFileName = UUID.randomUUID()+"."+output[1];
-		randomFileName = randomFileName+"";
-
-		String directory = environment.getProperty("file.upload.path");
-		String filepath = Paths.get(directory, randomFileName).toString();
+		String genName =	fileNameGen(fileNameGen(multipartFile.getOriginalFilename()));
 
 		try{
-			if(userService.updateUserImage(filepath,user_id)){
+			if(userService.updateUserImage(genName,user_id)){
 				// Save the file locally
 				BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(filepath));
 				stream.write(multipartFile.getBytes());
@@ -191,6 +190,26 @@ public class UserController {
 			response.setCode(ResponseCode.DELETE_FAIL);
 		}
 		return response;
+	}
+
+
+	/**
+	 *@Method fileNameGen
+	 * @Return new file Name gen
+	 */
+	String filepath;
+
+	String fileNameGen(String filename){
+
+		String[] output = filename.split("\\.");//split string specific "."
+		String randomFileName = UUID.randomUUID()+"."+output[1];
+		randomFileName = randomFileName+"";
+
+		String directory = environment.getProperty("file.upload.path");
+
+		filepath = Paths.get(directory, randomFileName).toString();
+
+		return randomFileName;
 	}
 
 }
