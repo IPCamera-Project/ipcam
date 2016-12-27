@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
 import java.util.*;
@@ -23,7 +24,7 @@ import java.util.*;
 
 /**
  *
- * @author Phearun, Lun Sovathana
+ * @author Rina
  *
  */
 @RestController
@@ -90,17 +91,31 @@ public class UserController {
 
 		String filename = multipartFile.getOriginalFilename();
 		String[] output = filename.split("\\.");
+
 		String nameGenerator = UUID.randomUUID()+"."+output[1];
 		nameGenerator = nameGenerator+"";
+		String directory = environment.getProperty("file.upload.path");
+		String filepath = Paths.get(directory, nameGenerator).toString();
 
 		UserInputer userInputer = new UserInputer();
+
 		userInputer.setUsername(username);
 		userInputer.setEmail(email);
 		userInputer.setPassword(password);
-		userInputer.setImage(nameGenerator);
+		userInputer.setImage(filepath);
+
 		if(userService.addUser(userInputer)){
 			response.setCode(ResponseCode.INSERT_SUCCESS);
 			response.setMessage(ResponseMessage.USER_MESSAGE);
+			// Save the file locally
+			BufferedOutputStream stream = null;
+			try {
+				stream = new BufferedOutputStream(new FileOutputStream(filepath));
+				stream.write(multipartFile.getBytes());
+				stream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}else{
 			response.setCode(ResponseCode.INSERT_FAIL);
 			response.setMessage(ResponseMessage.USER_MESSAGE);
