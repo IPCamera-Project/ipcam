@@ -42,8 +42,9 @@ public class UserController {
 	public ResponseEntity<Map<String,Object>> getUserByID(@PathVariable("id") int id)
 	{
 		User data= userService.getUserById(id);
-		Map<String,Object> map = new HashMap<>();
+		data.setImage(getFilePath(data.getImage()));
 
+		Map<String,Object> map = new HashMap<>();
 		try{
 			if(data != null){
 				map.put("DATA",data)	;
@@ -68,18 +69,10 @@ public class UserController {
 	@GetMapping("/getUserByEmail")
 	ResponseObject<User> getUserByEmail(@RequestParam("email") String email){
 		ResponseObject<User> userResponseObject = new ResponseObject<>();
+
 		User user = userService.getUserByEmail(email);
-
+		user.setImage(getFilePath(user.getImage()));
 		userResponseObject.setData(user);
-
-		BufferedInputStream stream = null;
-		try {
-			stream = new BufferedInputStream(new FileInputStream(user.getImage()));
-			System.out.print("gogogogo---->"+stream);
-			stream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		if(userResponseObject!=null	){
 			userResponseObject.setCode(ResponseCode.QUERY_FOUND);
@@ -211,5 +204,14 @@ public class UserController {
 
 		return randomFileName;
 	}
+	/**
+	 * @Method to get file directory
+	 */
+	String getFilePath(String fileName){
+		String directory = environment.getProperty("file.getImage.path");
+		System.out.print("images"+directory);
+		filepath = Paths.get(directory, fileName).toString();
 
+		return filepath;
+	}
 }
