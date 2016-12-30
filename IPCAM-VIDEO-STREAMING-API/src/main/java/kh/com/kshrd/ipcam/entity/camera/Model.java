@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import kh.com.kshrd.ipcam.entity.camera.base.BaseEntity;
 import kh.com.kshrd.ipcam.entity.plugin.Plugin;
 
-public class Model extends BaseEntity{
+public class Model {
 
 	@JsonProperty("MODEL_ID")
 	private int model_id;
@@ -14,8 +14,10 @@ public class Model extends BaseEntity{
 
 	@JsonProperty("NAME")
 	private String name;
+
 	@JsonProperty("VENDOR_ID")
 	private int vender_id;
+
 	@JsonProperty("IMAGE")
 	private String image;
 
@@ -33,13 +35,10 @@ public class Model extends BaseEntity{
 		this.model_id = model_id;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
-
-	@Override
-	public void setName(String name) {
+    public void setName(String name) {
 		this.name = name;
 	}
 
@@ -60,7 +59,6 @@ public class Model extends BaseEntity{
 	public int getVender_id() {
 		return vender_id;
 	}
-
 	public void setVender_id(int vender_id) {
 		this.vender_id = vender_id;
 	}
@@ -68,7 +66,6 @@ public class Model extends BaseEntity{
 	public int getPlugin_id() {
 		return plugin_id;
 	}
-
 	public void setPlugin_id(int plugin_id) {
 		this.plugin_id = plugin_id;
 	}
@@ -76,7 +73,6 @@ public class Model extends BaseEntity{
 	public Plugin getPlugin() {
 		return plugin;
 	}
-
 	public void setPlugin(Plugin plugin) {
 		this.plugin = plugin;
 	}

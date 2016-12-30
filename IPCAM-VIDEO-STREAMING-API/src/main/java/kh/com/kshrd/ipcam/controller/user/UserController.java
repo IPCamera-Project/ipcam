@@ -37,9 +37,9 @@ public class UserController {
 	@Autowired
 	Environment environment;
 
-	@GetMapping(value="/getUserById/{id}")
+	@GetMapping(value="/getUserById")
 	@ResponseBody
-	public ResponseEntity<Map<String,Object>> getUserByID(@PathVariable("id") int id)
+	public ResponseEntity<Map<String,Object>> getUserByID(@RequestParam("ID") int id)
 	{
 		User data= userService.getUserById(id);
 		data.setImage(getFilePath(data.getImage()));
