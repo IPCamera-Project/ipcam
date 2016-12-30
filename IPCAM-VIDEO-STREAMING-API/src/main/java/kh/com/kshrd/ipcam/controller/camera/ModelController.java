@@ -1,5 +1,6 @@
 package kh.com.kshrd.ipcam.controller.camera;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import kh.com.kshrd.ipcam.entity.camera.Model;
 import kh.com.kshrd.ipcam.entity.form.ModelInputer;
 import kh.com.kshrd.ipcam.entity.form.ModelModifier;
@@ -19,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by rina on 12/21/16.
@@ -40,16 +38,30 @@ public class ModelController {
     @ResponseBody
     public ResponseObject<Model> getAllModel(){
         ResponseObject<Model> response  = new ResponseObject<>();
-        List<Model> modelArrayList = modelService.getAllModel();
-        if(modelArrayList!=null){
-            response.setCode(ResponseCode.QUERY_FOUND);
-            response.setMessage(ResponseMessage.MODEL_MESSAGE);
-            response.setData(modelArrayList);
-        }
-        else {
-            response.setCode(ResponseCode.QUERY_NOT_FOUND);
-            response.setMessage(ResponseMessage.MODEL_MESSAGE);
-        }
+        List<Model> list = modelService.getAllModel();
+        List<Model> modelArrayList = new ArrayList<>();
+            for(Model model : list) {
+                String directory = environment.getProperty("file.getImage.path");
+                model.setImage(directory+"/"+model.getImage());
+                modelArrayList.add(model);
+            }
+            try{
+                if(modelArrayList!=null){
+                    response.setCode(ResponseCode.QUERY_FOUND);
+                    response.setMessage(ResponseMessage.MODEL_MESSAGE);
+                    response.setData(modelArrayList);
+                }
+                else {
+                    response.setCode(ResponseCode.QUERY_NOT_FOUND);
+                    response.setMessage(ResponseMessage.MODEL_MESSAGE);
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                response.setCode(ResponseCode.QUERY_NOT_FOUND);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+            }
+
         return response;
     }
 
@@ -59,16 +71,28 @@ public class ModelController {
     @ResponseBody
     public ResponseObject<Model> getModelById(@RequestParam("model_id")int model_id){
         ResponseObject<Model> response  = new ResponseObject<>();
-        Model model = modelService.getModelById(model_id);
-        if(model!=null){
-            response.setCode(ResponseCode.QUERY_FOUND);
-            response.setMessage(ResponseMessage.MODEL_MESSAGE);
-            response.setData(model);
+
+        try {
+            Model model = modelService.getModelById(model_id);
+
+            String directory = environment.getProperty("file.getImage.path");
+            model.setImage(directory+"/"+model.getImage());
+
+            if(model!=null){
+                response.setCode(ResponseCode.QUERY_FOUND);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+                response.setData(model);
+            }
+            else {
+                response.setCode(ResponseCode.QUERY_NOT_FOUND);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+            }
         }
-        else {
+        catch (Exception e){
             response.setCode(ResponseCode.QUERY_NOT_FOUND);
             response.setMessage(ResponseMessage.MODEL_MESSAGE);
         }
+
         return response;
     }
 
@@ -95,8 +119,10 @@ public class ModelController {
         ModelInputer modelInputer = new ModelInputer();
         modelInputer.setName(name);
         modelInputer.setVender_id(vender_id);
-        modelInputer.setImage(filepath);
+        modelInputer.setImage(randomFileName);
         modelInputer.setPlugin_id(plugin_id);
+
+
         Map<String,Object> map = new HashMap<>();
 
         try{

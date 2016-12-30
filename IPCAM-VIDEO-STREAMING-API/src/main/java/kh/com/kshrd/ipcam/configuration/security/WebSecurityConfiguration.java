@@ -2,9 +2,12 @@ package kh.com.kshrd.ipcam.configuration.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -18,11 +21,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Qualifier("ajaxAuthenticationSuccessHandler")
     AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
 
+    private static String REALM="MY_TEST_REALM";
+
     @Autowired
         protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
             auth.inMemoryAuthentication()
-            	.withUser("a")
-            	.password("a")
+            	.withUser("admin")
+            	.password("kompong som")
             	.roles("ADMIN");
     }
     @Override
@@ -35,9 +40,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     passwordParameter("password").
                     permitAll().
                     successHandler(ajaxAuthenticationSuccessHandler).
-                    failureHandler(ajaxAuthenticationFailureHandler);
-            httpSecurity.csrf().disable();
-            httpSecurity.exceptionHandling().accessDeniedPage("/access-denied");
+                    failureHandler(ajaxAuthenticationFailureHandler).and()
+                    .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthen());;
+        httpSecurity.csrf().disable();
+        httpSecurity.exceptionHandling().accessDeniedPage("/access-denied");
 
+    }
+    @Bean
+    BasicAuthen getBasicAuthen(){
+        return new BasicAuthen();
+    }
+
+    @Override
+    public void configure(WebSecurity webSecurity)throws Exception{
+        webSecurity.ignoring().antMatchers(HttpMethod.OPTIONS,"/**");
     }
 }
