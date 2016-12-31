@@ -26,6 +26,10 @@ public class RtspStream extends ExternalBase {
 
     }
 
+    public void setHandler(long handler){
+        this.handler = handler;
+    }
+
     private native long    createContextInternal(String home);
     private native boolean openRtspInternal(long handler, String url);
     private native byte[]  readFrameInternal(long handler);

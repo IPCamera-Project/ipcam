@@ -1,5 +1,6 @@
 package kh.com.kshrd.hikvision;
 import kh.com.kshrd.core.Command;
+import kh.com.kshrd.core.exceptions.SystemException;
 import org.apache.http.HttpEntity;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -174,6 +175,7 @@ public class ServiceProvider extends Command {
 
     @Override
     public String getRtsp() {
-        return String.format("rstp://%s:%s/Streaming/Channels/10%d", this.host, this.rstpPort ,1);
+        //System.out.println(String.format("rtsp://%s:%s/Streaming/Channels/101", this.host, this.rstpPort));
+        return "/Streaming/Channels/102";
     }
 }

@@ -15,3 +15,4 @@ hikvision/target/hikvision-0.0.1-SNAPSHOT.jar
 vivotek/target/vivotek-0.0.1-SNAPSHOT.jar
 /IPCAM-VIDEO-STREAMING-API/plugins/
 /.idea/
+/IPCAM-VIDEO-STREAMING-API/*.log

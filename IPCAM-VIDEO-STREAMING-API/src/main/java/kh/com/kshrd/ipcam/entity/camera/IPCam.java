@@ -126,7 +126,7 @@ public class IPCam {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "IPCam [serial_number=" + serial_number + ", ip_address=" + ip_address + ", web_port=" + web_port
