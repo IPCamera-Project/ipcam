@@ -1,6 +1,8 @@
 package kh.com.kshrd.ipcam.service.extend;
 
 import kh.com.kshrd.ipcam.entity.camera.IPCam;
+import kh.com.kshrd.ipcam.entity.form.IPCameraInputer;
+import kh.com.kshrd.ipcam.entity.form.IPCameraModifier;
 import kh.com.kshrd.ipcam.service.CrudService;
 
 import java.util.List;
@@ -17,9 +19,9 @@ public interface IPCamService {
 
     boolean remove(int id);
 
-    boolean update(IPCam object);
+    boolean update(IPCameraModifier object);
 
-    boolean save(IPCam object);
+    boolean save(IPCameraInputer object);
 
     IPCam getCamOnce(int userId, int camId);
 

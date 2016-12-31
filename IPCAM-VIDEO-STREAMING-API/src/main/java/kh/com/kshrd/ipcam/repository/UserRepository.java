@@ -16,7 +16,7 @@ public interface UserRepository {
 
 	//THIS SQL USED IN IPCAMERA REPOSITORY. BY CHIVORN !
 	final String GET_USER_BY_ID	=	"select tbl_user.*,tbl_role.* from tbl_user " +
-			" LEFT JOIN tbl_user_detail ON tbl_user.user_id = tbl_user.user_id " +
+			" LEFT JOIN tbl_user_detail ON tbl_user_detail.user_id = tbl_user.user_id " +
 			" LEFT JOIN tbl_role ON tbl_user_detail.role_id = tbl_role.role_id " +
 			" where tbl_user.active = 1 and tbl_user.user_id = #{user_id}";
 
@@ -25,7 +25,7 @@ public interface UserRepository {
 			"tbl_user.user_id = tbl_user.user_id where tbl_user.active = 1";
 
 	final String GET_USER_BY_EMAIL = "select tbl_user.*,tbl_role.* from tbl_user " +
-			" LEFT JOIN tbl_user_detail ON tbl_user.user_id = tbl_user.user_id " +
+			" LEFT JOIN tbl_user_detail ON tbl_user_detail.user_id = tbl_user.user_id " +
 			" LEFT JOIN tbl_role ON tbl_user_detail.role_id = tbl_role.role_id " +
 			" where tbl_user.active = 1 and tbl_user.email = #{email}";;
 

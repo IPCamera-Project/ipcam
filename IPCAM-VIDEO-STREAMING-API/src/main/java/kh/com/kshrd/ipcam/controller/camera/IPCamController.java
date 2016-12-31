@@ -2,6 +2,8 @@ package kh.com.kshrd.ipcam.controller.camera;
 import java.util.ArrayList;
 
 import kh.com.kshrd.ipcam.entity.camera.IPCam;
+import kh.com.kshrd.ipcam.entity.form.IPCameraInputer;
+import kh.com.kshrd.ipcam.entity.form.IPCameraModifier;
 import kh.com.kshrd.ipcam.respone.Response;
 import kh.com.kshrd.ipcam.respone.ResponseCode;
 import kh.com.kshrd.ipcam.respone.ResponseList;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class IPCamController {
 	@Autowired
 	private IPCamServiceImpl service;
-	
+
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public ResponseList<IPCam> getAllCamera()
 	{
@@ -40,7 +42,7 @@ public class IPCamController {
 		return res;
 	}
 	
-	
+
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseObject<IPCam> getCameraByID(@PathVariable("id") int id)
 	{
@@ -58,7 +60,7 @@ public class IPCamController {
 		}
 		return res;
 	}
-	
+
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public Response deleteCameraByID(@PathVariable("id") int id)
 	{
@@ -76,8 +78,8 @@ public class IPCamController {
 		return res;
 	}
 	
-	@RequestMapping(value="/camera",method=RequestMethod.POST)
-	public Response insertCamera(@RequestBody IPCam ipCam)
+	@RequestMapping(value="/addCamera",method=RequestMethod.POST)
+	public Response insertCamera(@RequestBody IPCameraInputer ipCam)
 	{
 		Response res=new Response();
 		if(service.save(ipCam)){
@@ -93,8 +95,8 @@ public class IPCamController {
 		
 	}
 	
-	@RequestMapping(value="/camera",method=RequestMethod.PUT)
-	public Response updateCameraByID(@RequestBody IPCam ipCam)
+	@RequestMapping(value="/updateCamera",method=RequestMethod.PUT)
+	public Response updateCameraByID(@RequestBody IPCameraModifier ipCam)
 	{
 		Response res=new Response();
 		

@@ -7,18 +7,12 @@ import kh.com.kshrd.core.plugin.PluginStateEvent;
 import kh.com.kshrd.core.utils.StringUtils;
 import kh.com.kshrd.core.utils.Tuple;
 import kh.com.kshrd.ipcam.controller.camera.IPCamCommandController;
-import kh.com.kshrd.ipcam.emun.ControlEnum;
 import kh.com.kshrd.ipcam.entity.camera.IPCam;
 import kh.com.kshrd.ipcam.entity.user.User;
-import kh.com.kshrd.ipcam.service.extend.ModelService;
 import kh.com.kshrd.ipcam.service.impl.IPCamServiceImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by sophatvathana on 22/12/16.

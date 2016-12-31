@@ -1,34 +1,19 @@
 package kh.com.kshrd.ipcam.controller.camera;
 
-import kh.com.kshrd.core.*;
-import kh.com.kshrd.core.exceptions.SystemException;
-import kh.com.kshrd.core.plugin.DefaultLoader;
-import kh.com.kshrd.core.plugin.PluginLoadClass;
+import kh.com.kshrd.core.StreamConsumer;
 import kh.com.kshrd.core.plugin.PluginStateEvent;
-import kh.com.kshrd.core.utils.StringUtils;
 import kh.com.kshrd.core.utils.Tuple;
 import kh.com.kshrd.ipcam.base.BaseStream;
 import kh.com.kshrd.ipcam.configuration.BeanConfiguration;
 import kh.com.kshrd.ipcam.emun.ControlEnum;
 import kh.com.kshrd.ipcam.entity.camera.IPCam;
-import kh.com.kshrd.ipcam.entity.camera.Model;
-import kh.com.kshrd.ipcam.entity.plugin.Plugin;
-import kh.com.kshrd.ipcam.entity.user.User;
-import kh.com.kshrd.ipcam.service.CameraType.CameraFactory.ICamFactory;
-import kh.com.kshrd.ipcam.service.CameraType.CmdInterface;
 import kh.com.kshrd.ipcam.service.LoadClassService;
-import kh.com.kshrd.ipcam.service.PluginService;
-import kh.com.kshrd.ipcam.service.UserService;
-import kh.com.kshrd.ipcam.service.extend.ModelService;
-import kh.com.kshrd.ipcam.service.impl.IPCamServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
@@ -118,7 +103,7 @@ public class IPCamCommandController {
                     ipCam.getPassword(),
                     ipCam.getRtsp_port(),
                     pluginStateEvent.getRtsp(),
-                    ipCam.getId()
+                    ipCam.getCamera_id()
             );
             cam.initialize();
 

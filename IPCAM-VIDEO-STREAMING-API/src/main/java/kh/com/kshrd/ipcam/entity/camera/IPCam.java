@@ -5,8 +5,12 @@ import kh.com.kshrd.ipcam.entity.user.User;
 
 public class IPCam {
 
-	@JsonProperty("ID")
-	private long id;
+	@JsonProperty("COMMERA_ID")
+	private int camera_id;
+
+
+	@JsonProperty("NAME")
+	private String name;
 
 	@JsonProperty("SERIAL_NUMBER")
 	private String serial_number;
@@ -29,13 +33,27 @@ public class IPCam {
 	@JsonProperty("STREAM_URL")
 	private String stream_url;
 
-	
 	@JsonProperty("MODEL")
 	private Model model;
 	
 	@JsonProperty("USER")
 	private User user;
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getCamera_id() {
+		return camera_id;
+	}
+
+	public void setCamera_id(int camera_id) {
+		this.camera_id = camera_id;
+	}
 
 	public String getSerial_number() {
 		return serial_number;
@@ -107,14 +125,6 @@ public class IPCam {
 	
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	@Override
