@@ -2,46 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f59c85-1c8a-4d73-8120-18884e805468" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/configuration/BeanConfiguration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/BluePrintCamera.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/buffer/RTCPpacket.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/buffer/StreamBuffer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/buffer/VideoStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/target/classes/kh/com/kshrd/core/IpCamera.class" afterPath="$PROJECT_DIR$/core/target/classes/kh/com/kshrd/core/IpCamera.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/target/classes/kh/com/kshrd/core/RtspCamera.class" afterPath="$PROJECT_DIR$/core/target/classes/kh/com/kshrd/core/RtspCamera.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/target/kh.com.kshrd.core-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/core/target/kh.com.kshrd.core-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hikvision/target/classes/kh/com/kshrd/hikvision/ServiceProvider.class" afterPath="$PROJECT_DIR$/hikvision/target/classes/kh/com/kshrd/hikvision/ServiceProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vivotek/target/classes/kh/com/kshrd/vivotek/ServiceProvider.class" afterPath="$PROJECT_DIR$/vivotek/target/classes/kh/com/kshrd/vivotek/ServiceProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/libavcodec.57.dylib" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/libavcodec.57.dylib" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/libavformat.57.dylib" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/libavformat.57.dylib" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/libavutil.55.dylib" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/libavutil.55.dylib" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/libswresample.2.dylib" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/libswresample.2.dylib" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/strmrecv.dylib" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/native/mac/x86_64/strmrecv.dylib" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/base/BaseStream.java" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/base/BaseStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamCommandController.java" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamCommandController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamController.java" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/emun/ControlEnum.java" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/emun/ControlEnum.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/entity/camera/IPCam.java" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/entity/camera/IPCam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/resources/application.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/test/java/kh/com/kshrd/core/HikVisionTest.java" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/test/java/kh/com/kshrd/core/HikVisionTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/test/java/kh/com/kshrd/core/TestCommands.java" afterPath="$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/test/java/kh/com/kshrd/core/TestCommands.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/IpCamera.java" afterPath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/IpCamera.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/RtspCamera.java" afterPath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/RtspCamera.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/RtspStream.java" afterPath="$PROJECT_DIR$/core/src/main/java/kh/com/kshrd/core/RtspStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/target/classes/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/core/target/classes/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/core/target/maven-archiver/pom.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/core/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hikvision/src/main/java/kh/com/kshrd/hikvision/ServiceProvider.java" afterPath="$PROJECT_DIR$/hikvision/src/main/java/kh/com/kshrd/hikvision/ServiceProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hikvision/target/classes/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/hikvision/target/classes/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hikvision/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/hikvision/target/maven-archiver/pom.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hikvision/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/hikvision/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vivotek/src/main/java/kh/com/kshrd/vivotek/ServiceProvider.java" afterPath="$PROJECT_DIR$/vivotek/src/main/java/kh/com/kshrd/vivotek/ServiceProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vivotek/target/classes/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/vivotek/target/classes/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vivotek/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/vivotek/target/maven-archiver/pom.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vivotek/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/vivotek/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
     </list>
     <ignored path="kh.com.kshrd.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,7 +31,7 @@
       <file leaf-file-name="IPCamCommandController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamCommandController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
+            <state relative-caret-position="-11">
               <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -1452,16 +1413,16 @@
       <option name="presentableId" value="Default" />
       <updated>1482731530520</updated>
       <workItem from="1482731532916" duration="25009000" />
-      <workItem from="1483151679077" duration="1850000" />
+      <workItem from="1483151679077" duration="2545000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26859000" />
+    <option name="totallyTimeSpent" value="27554000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1472,9 +1433,9 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.65095544" sideWeight="0.50293255" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.49638554" sideWeight="0.49706745" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.49638554" sideWeight="0.49706745" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.65095544" sideWeight="0.49706745" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6506024" sideWeight="0.49706745" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24391988" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1813,7 +1774,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/IPCAM-VIDEO-STREAMING-API/src/main/java/kh/com/kshrd/ipcam/controller/camera/IPCamCommandController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
+        <state relative-caret-position="-11">
           <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
