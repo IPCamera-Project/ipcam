@@ -1,8 +1,6 @@
 package kh.com.kshrd.ipcam.controller.camera;
 
-import kh.com.kshrd.core.IpCamera;
-import kh.com.kshrd.core.StreamConsumer;
-import kh.com.kshrd.core.Transformer;
+import kh.com.kshrd.core.*;
 import kh.com.kshrd.core.exceptions.SystemException;
 import kh.com.kshrd.core.plugin.DefaultLoader;
 import kh.com.kshrd.core.plugin.PluginLoadClass;
@@ -10,6 +8,7 @@ import kh.com.kshrd.core.plugin.PluginStateEvent;
 import kh.com.kshrd.core.utils.StringUtils;
 import kh.com.kshrd.core.utils.Tuple;
 import kh.com.kshrd.ipcam.base.BaseStream;
+import kh.com.kshrd.ipcam.configuration.BeanConfiguration;
 import kh.com.kshrd.ipcam.emun.ControlEnum;
 import kh.com.kshrd.ipcam.entity.camera.IPCam;
 import kh.com.kshrd.ipcam.entity.camera.Model;
@@ -28,6 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
@@ -51,6 +52,9 @@ public class IPCamCommandController {
 
     private PluginStateEvent pluginStateEvent;
 
+    @Autowired
+    private BeanConfiguration beanConfiguration;
+
     @RequestMapping(value = "/cmd",
                     method = RequestMethod.GET,
                     produces = "application/json")
@@ -67,6 +71,9 @@ public class IPCamCommandController {
                 break;
             case up:
                 t = pluginStateEvent.up();
+                break;
+            case stop:
+                t =pluginStateEvent.stop();
                 break;
             case down:
                 t = pluginStateEvent.down();
@@ -91,18 +98,43 @@ public class IPCamCommandController {
         Tuple loadClass = loadClassService.loadClassService(email,camera);
         pluginStateEvent = (PluginStateEvent) loadClass._1;
         IPCam ipCam = (IPCam) loadClass._2;
-        System.out.println("Hello world!!!");
+        //System.out.println(pluginStateEvent.getClass().getName());
+//        beanConfiguration.setData(ipCam.getModel().getVender().getName(),
+//                ipCam.getModel().getName(), ipCam.getIp_address(),
+//                ipCam.getWeb_port(), ipCam.getUsername(), ipCam.getPassword(), ipCam.getRtsp_port(),
+//                pluginStateEvent.getRtsp(),
+//                pluginStateEvent.getClass()
+//        );
+
+        logger.debug("Get RTSP: ",pluginStateEvent.getRtsp());
         do {
-            IpCamera cam = new BaseStream(ipCam.getModel().getVender().getName(),
-                    ipCam.getModel().getName(), ipCam.getIp_address(),
-                    ipCam.getWeb_port(), ipCam.getUsername(), ipCam.getPassword(), ipCam.getRtsp_port(), pluginStateEvent.getRtsp());
+              //beanConfiguration.init();
+//            RtspCamera cam = beanConfiguration.camera();
+//            beanConfiguration.init();
+            BaseStream  cam = new BaseStream(ipCam.getModel().getVender().getName(),
+                    ipCam.getModel().getName(),
+                    ipCam.getIp_address(),
+                    ipCam.getUsername(),
+                    ipCam.getPassword(),
+                    ipCam.getRtsp_port(),
+                    pluginStateEvent.getRtsp(),
+                    ipCam.getId()
+            );
+            cam.initialize();
+
+                System.out.println(ipCam.getModel().getVender().getName());
+                System.out.println(ipCam.getModel().getName());
+                System.out.println(ipCam.getIp_address());
+                System.out.println(pluginStateEvent.getRtsp());
+//            BaseStream cam = new BaseStream("hikvision", "DS-2CD2Q10FD-IW", "192.168.0.29", 80, "admin", "12345", 554, "/Streaming/Channels/102");
+//                    System.out.println(cam.getRtspPath());
             if (cam == null) {
                 logger.info("stream command: {} was failed: object not found", camera);
                 break;
             }
-
             try {
                 OutputStream os = response.getOutputStream();
+
                 logger.debug("Start Consumer");
                 response.addHeader("Cache-Control", "no-cache");
                 response.setContentType("multipart/x-mixed-replace;boundary=boundary");
@@ -111,7 +143,7 @@ public class IPCamCommandController {
                 long count = 0, sendSize = 0;
                 while(cons.getContinue()) {
                     if (!cons.exist()) {
-                        Thread.sleep(3);
+                        Thread.sleep(30);
                         continue;
                     }
                     byte[] packet = cons.take();
@@ -121,8 +153,11 @@ public class IPCamCommandController {
                     os.flush();
                     sendSize += packet.length;
                     count++;
-                    if (count % 100 == 0)
+                    if (count % 100 == 0) {
                         logger.info("{} stream sending: {}/{}", cam.getModelName(), count, sendSize);
+                       // cam.release();
+                    }
+                   // cam.release();
                 }
 
             } catch (Exception e) {
@@ -132,5 +167,14 @@ public class IPCamCommandController {
         } while(false);
     }
 
+//    @PreDestroy
+//    public void destroy(){
+//        cam.release();
+//    }
+
+//    @PostConstruct
+//    public void init(){
+//        cam.initialize();
+//    }
 
 }

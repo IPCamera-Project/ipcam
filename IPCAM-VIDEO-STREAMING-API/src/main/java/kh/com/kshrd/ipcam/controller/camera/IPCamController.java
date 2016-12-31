@@ -22,7 +22,7 @@ public class IPCamController {
 	@Autowired
 	private IPCamServiceImpl service;
 	
-	@RequestMapping(value="/getALlCamera",method=RequestMethod.GET)
+	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public ResponseList<IPCam> getAllCamera()
 	{
 		ArrayList<IPCam> data=(ArrayList<IPCam>) service.findAll();
@@ -41,7 +41,7 @@ public class IPCamController {
 	}
 	
 	
-	@RequestMapping(value="/getCameraById/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseObject<IPCam> getCameraByID(@PathVariable("id") int id)
 	{
 		IPCam data= service.findOne(id);
@@ -59,7 +59,7 @@ public class IPCamController {
 		return res;
 	}
 	
-	@RequestMapping(value="/removeCameraById/{id}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public Response deleteCameraByID(@PathVariable("id") int id)
 	{
 	

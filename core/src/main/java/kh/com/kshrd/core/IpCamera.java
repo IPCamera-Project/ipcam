@@ -1,5 +1,6 @@
 package kh.com.kshrd.core;
 
+import kh.com.kshrd.core.plugin.PluginStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public abstract class IpCamera {
     static Logger logger = LoggerFactory.getLogger(IpCamera.class);
 
-    private ICommand ptzInterface;
+    private PluginStateEvent ptzInterface;
     private String       vendorName, modelName;
     private String       host, user, pass;
     private int          port;
@@ -50,11 +51,11 @@ public abstract class IpCamera {
         this.pass = pass;
     }
 
-    public ICommand getPtzInterface() {
+    public PluginStateEvent getPtzInterface() {
         return ptzInterface;
     }
 
-    protected void setPtzInterface(ICommand ptzInterface) {
+    protected void setPtzInterface(PluginStateEvent ptzInterface) {
         this.ptzInterface = ptzInterface;
     }
 

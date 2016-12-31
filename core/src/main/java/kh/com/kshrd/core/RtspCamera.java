@@ -1,5 +1,7 @@
 package kh.com.kshrd.core;
 
+import kh.com.kshrd.core.exceptions.SystemException;
+import kh.com.kshrd.core.plugin.PluginStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,34 +16,37 @@ public class RtspCamera extends IpCamera implements Runnable {
     private String       rtspPath;
     private Thread       rtspThread;
     private boolean      rtspContinue;
+    private long         client;
 
-    public RtspCamera(String vendor, String model, String host, int webPort, String user, String pass, int rtspPort, String rtspPath) {
+    public RtspCamera(String vendor, String model, String host, String user, String pass, int rtspPort, String rtspPath,
+                      Class cls, long client) {
         this.setVendorName(vendor);
         this.setModelName(model);
         this.setRtspPath(rtspPath);
         this.setRtspPort(rtspPort);
         setHost(host);
-        setPort(webPort);
+        //setPort(webPort);
         setUser(user);
         setPass(pass);
+        this.client = client;
 
-//        if (cls != null) {
-//            ICommand p;
-//
-//            try {
-//                p = (ICommand) cls.newInstance();
-//                p.setConnection(host, webPort, user, pass);
-//
-//                setPtzInterface(p);
-//            } catch (InstantiationException e) {
-//                logger.warn(e.getMessage());
-//            } catch (IllegalAccessException e) {
-//                logger.warn(e.getMessage());
-//            }
-//        }
-//        else {
-//            logger.info("{}:{} ptz not set", model, host);
-//        }
+        if (cls != null) {
+            PluginStateEvent p;
+
+            try {
+                p = (PluginStateEvent) cls.newInstance();
+                p.setConnection(host,80,rtspPort,user,pass);
+
+                setPtzInterface(p);
+            } catch (InstantiationException e) {
+                logger.warn(e.getMessage());
+            } catch (IllegalAccessException e) {
+                logger.warn(e.getMessage());
+            }
+        }
+        else {
+            logger.info("{}:{} ptz not set", model, host);
+        }
     }
 
     public RtspStream getRtspStream() {
@@ -75,7 +80,7 @@ public class RtspCamera extends IpCamera implements Runnable {
         if (rtspContinue) {
             rtspContinue = false;
             try {
-                rtspThread.join(10000);
+                rtspThread.join(100);
             } catch (InterruptedException e) {
                 logger.info(e.getMessage());
             }
@@ -111,6 +116,7 @@ public class RtspCamera extends IpCamera implements Runnable {
         long cnt = 0;
         while(rtspContinue) {
             try {
+                rtspStream.setHandler(client);
                 rtspStream.initialize();
 
                 logger.debug("Rtsp {}: start connect", url);
@@ -148,5 +154,6 @@ public class RtspCamera extends IpCamera implements Runnable {
         rtspContinue = false;
         logger.info("Stop : {}", url);
     }
+
 
 }

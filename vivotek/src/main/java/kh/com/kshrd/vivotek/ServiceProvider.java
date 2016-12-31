@@ -113,4 +113,9 @@ public class ServiceProvider extends Command {
             httpclient = HttpClients.createDefault();
 
     }
+
+    @Override
+    public String getRtsp() {
+        return "/live.sdp";
+    }
 }

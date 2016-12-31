@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1482456805502
+Bnd-LastModified: 1482743670755
 Build-Jdk: 1.8.0_65
 Built-By: sophatvathana
 Bundle-Description: Parent pom providing dependency and plugin managemen

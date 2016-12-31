@@ -4,7 +4,10 @@ import kh.com.kshrd.ipcam.entity.camera.base.BaseEntity;
 import kh.com.kshrd.ipcam.entity.user.User;
 
 public class IPCam {
-	
+
+	@JsonProperty("ID")
+	private long id;
+
 	@JsonProperty("SERIAL_NUMBER")
 	private String serial_number;
 	
@@ -105,7 +108,15 @@ public class IPCam {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
 		return "IPCam [serial_number=" + serial_number + ", ip_address=" + ip_address + ", web_port=" + web_port
