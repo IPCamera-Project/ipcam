@@ -5,7 +5,7 @@ import kh.com.kshrd.ipcam.entity.user.User;
 
 public class IPCam {
 
-	@JsonProperty("COMMERA_ID")
+	@JsonProperty("COMERA_ID")
 	private int camera_id;
 
 	@JsonProperty("NAME")

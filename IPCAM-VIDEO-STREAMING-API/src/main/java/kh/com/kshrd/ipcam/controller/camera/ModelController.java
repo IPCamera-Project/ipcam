@@ -66,9 +66,7 @@ public class ModelController {
         return response;
     }
 
-    @RequestMapping(  value = "/getModelById",
-            method = RequestMethod.GET,
-            produces = "application/json")
+    @RequestMapping(value = "/getModelById", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public ResponseObject<Model> getModelById(@RequestParam("model_id")int model_id){
         ResponseObject<Model> response  = new ResponseObject<>();
@@ -101,13 +99,13 @@ public class ModelController {
     Environment environment;
     @RequestMapping(value = "/addModel",method=RequestMethod.POST,consumes = "multipart/form-data;charset=UTF-8")
     @ResponseBody
-    public ResponseEntity<?> addModel(@RequestParam("NAME")String name,
+    public Response addModel(@RequestParam("NAME")String name,
                                       @RequestParam("VENDER_ID")int vender_id,
                                       @RequestParam("PLUGIN_ID")int plugin_id,
                                       @RequestParam("FILE_IMAGE")MultipartFile multipartFile){
 
 
-
+        Response response = new Response();
 
         String   filename = multipartFile.getOriginalFilename();
         String[] output = filename.split("\\.");//split string specific "."
@@ -134,18 +132,19 @@ public class ModelController {
                 stream.write(multipartFile.getBytes());
                 stream.close();
 
-                map.put("CODE", HttpStatus.OK);
-                map.put("MESSAGE","SUCESSFULL");
+                response.setCode(ResponseCode.INSERT_SUCCESS);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
             }
             else {
-                map.put("MESSAGE","UNSUCESSFULL");
+                response.setCode(ResponseCode.INSERT_FAIL);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
             }
+            return  response;
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return null;
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
