@@ -1,6 +1,7 @@
 package kh.com.kshrd.ipcam.controller.camera;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import kh.com.kshrd.ipcam.entity.camera.IPCam;
 import kh.com.kshrd.ipcam.entity.form.IPCameraInputer;
 import kh.com.kshrd.ipcam.entity.form.IPCameraModifier;
@@ -41,14 +42,29 @@ public class IPCamController {
 		}
 		return res;
 	}
-	
 
-	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseObject<IPCam> getCameraByID(@PathVariable("id") int id)
+	@GetMapping("getCameraByUserId")
+	public ResponseList<IPCam> getCameraByUserId(@RequestParam("USER_ID")int user_id){
+		ArrayList<IPCam> data=(ArrayList<IPCam>) service.findCameraByUserId(user_id);
+		ResponseList<IPCam> res=new ResponseList<IPCam>();
+
+		if(data.size()>0){
+			res.setCode(ResponseCode.QUERY_FOUND);
+			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			res.setData(data);
+		}
+		else{
+			res.setCode(ResponseCode.QUERY_NOT_FOUND);
+			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+		}
+		return res;
+	}
+
+	@RequestMapping(value="/getCameraById",method=RequestMethod.GET)
+	public ResponseObject<IPCam> getCameraByID(@RequestParam("ID") int id)
 	{
 		IPCam data= service.findOne(id);
 		ResponseObject<IPCam> res=new ResponseObject<IPCam>();
-		
 		if(data != null){
 			res.setCode(ResponseCode.QUERY_FOUND);
 			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
@@ -61,8 +77,8 @@ public class IPCamController {
 		return res;
 	}
 
-	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-	public Response deleteCameraByID(@PathVariable("id") int id)
+	@RequestMapping(value="/removeCameraById",method=RequestMethod.DELETE)
+	public Response deleteCameraByID(@RequestParam("ID") int id)
 	{
 	
 		boolean status=service.remove(id);
@@ -94,13 +110,13 @@ public class IPCamController {
 		return res;
 		
 	}
-	
+
 	@RequestMapping(value="/updateCamera",method=RequestMethod.PUT)
-	public Response updateCameraByID(@RequestBody IPCameraModifier ipCam)
+	public Response updateCameraByID(IPCameraModifier ipCameraModifier)
 	{
 		Response res=new Response();
-		
-		if(service.update(ipCam))
+
+		if(service.update(ipCameraModifier))
 		{
 			res.setCode(ResponseCode.UPDATE_SUCCESS);
 			res.setMessage(ResponseMessage.CAMERA_MESSAGE);

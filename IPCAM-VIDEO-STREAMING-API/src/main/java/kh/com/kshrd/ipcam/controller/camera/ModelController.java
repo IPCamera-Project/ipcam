@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -149,15 +150,43 @@ public class ModelController {
 
 
 
-    @RequestMapping(value = "/updateModel",
-            method = RequestMethod.PUT,
-            produces = "application/json")
+    @RequestMapping( value = "/updateModel",
+                     method = RequestMethod.PUT,
+                     produces = "application/json")
     @ResponseBody
-    public Response updateModel(@RequestBody ModelModifier modelModifier){
+    public Response updateModel(@RequestParam("MODEL_ID")int model_id,
+                                @RequestParam("NAME")String name,
+                                @RequestParam("VENDER_ID")int vender_id,
+                                @RequestParam("PLUGIN_ID")int plugin_id,
+                                @RequestParam("FILE_IMAGE")MultipartFile multipartFile){
+
         Response response = new Response();
+
+        String   filename = multipartFile.getOriginalFilename();
+        String[] output = filename.split("\\.");//split string specific "."
+        String randomFileName = UUID.randomUUID()+"."+output[1];
+        randomFileName = randomFileName+"";
+
+        String directory = environment.getProperty("file.upload.path");
+        String filepath = Paths.get(directory, randomFileName).toString();
+
+        ModelModifier modelModifier = new ModelModifier();
+            modelModifier.setModel_id(model_id);
+            modelModifier.setName(name);
+            modelModifier.setVender_id(vender_id);
+            modelModifier.setImage(randomFileName);
+            modelModifier.setPlugin_id(plugin_id);
+
         if(modelService.update(modelModifier)){
             response.setMessage(ResponseCode.UPDATE_SUCCESS);
             response.setCode(ResponseMessage.MODEL_MESSAGE);
+
+            // Save the file locally
+          try {
+              BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(filepath));
+              stream.write(multipartFile.getBytes());
+              stream.close();
+            } catch (IOException e) {e.printStackTrace();}
         }
         else {
             response.setCode(ResponseMessage.MODEL_MESSAGE);
@@ -167,9 +196,8 @@ public class ModelController {
     }
 
 
-    @RequestMapping(value = "/removeModel",
-            method = RequestMethod.DELETE,
-            produces = "application/json")
+    @RequestMapping(value = "/removeModel", method = RequestMethod.DELETE,
+                      produces = "application/json")
     @ResponseBody
     public  Response removeModel(@RequestParam("model_id") int model_id){
         Response response = new Response();

@@ -1,6 +1,7 @@
 package kh.com.kshrd.ipcam.repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kh.com.kshrd.ipcam.entity.camera.IPCam;
 import kh.com.kshrd.ipcam.entity.form.IPCameraInputer;
@@ -25,9 +26,10 @@ public interface IPCamRepository {
 			                                " WHERE camera_id=#{camera_id}";
 	
 	
-	final String INSERT_CAMERA			=	"INSERT INTO tbl_camera "
-											+ "(name,serial_number,ip_address,web_port,rtsp_port,username,password,stream_url,model_id,user_id) "
-											+ "VALUES(#{NAME},#{SERIAL_NUMBER},#{IP_ADDRESS},#{WEB_PORT},#{RTSP_PORT},#{USERNAME},#{PASSWORD},#{STREAM_URL},#{MODEL_ID},#{USER_ID})";
+	final String INSERT_CAMERA	=	"INSERT INTO tbl_camera "
+			                       + "(name,serial_number,ip_address,web_port,rtsp_port,username,password,model_id,user_id) "
+			                       + "VALUES(#{name},#{serial_number},#{ip_address},#{web_port},#{rtsp_port},#{username}," +
+			                       " #{password},#{model_id},#{user_id})";
 
 
 
@@ -41,7 +43,6 @@ public interface IPCamRepository {
 		@Result(property="rtsp_port", column="rtsp_port"),
 		@Result(property="username", column="username"),
 		@Result(property="password", column="password"),
-		@Result(property="stream_url", column="stream_url"),
 		@Result(property="user", column="user_id", one = @One(select = "kh.com.kshrd.ipcam.repository.UserRepository.getUserByID")),
 		@Result(property="model", column="model_id", one = @One(select = "kh.com.kshrd.ipcam.repository.ModelRepository.findOne"))
 
@@ -70,14 +71,24 @@ public interface IPCamRepository {
 	@Update(IPCamRepository.UPDATE_CAMERA_BY_ID)
 	boolean updateCamera(IPCameraModifier ipCam);
 
-	@Insert(IPCamRepository.INSERT_CAMERA)
+	@Insert(INSERT_CAMERA)
 	boolean insertCamera(IPCameraInputer ipCam);
 
 	@Select("SELECT tc.*, tu.* FROM tbl_camera tc LEFT JOIN tbl_user tu ON tc.user_id = tu.user_id WHERE tu.user_id = #{userId} AND tu.active = 1 AND tc.active = 1 AND tc.camera_id = #{camId}")
 	@Results({
 			@Result(property="model", column="model_id", one = @One(select = "kh.com.kshrd.ipcam.repository.ModelRepository.findOne"))
 	})
-	IPCam getCamByUserId(@Param("userId") int userId, @Param("camId") int camId);
+	IPCam getCamOnce(@Param("userId") int userId, @Param("camId") int camId);
+
+
+
+	@Select("SELECT tc.*, tu.* FROM tbl_camera tc LEFT JOIN tbl_user tu ON tc.user_id = tu.user_id WHERE tu.user_id = #{userId} AND tu.active = 1 AND tc.active = 1 ")
+	@Results({
+			@Result(property="model", column="model_id", one = @One(select = "kh.com.kshrd.ipcam.repository.ModelRepository.findOne"))
+	})
+	List<IPCam> getCamByUserId(@Param("userId") int userId);
+
+
 
 
 }

@@ -8,11 +8,12 @@ import kh.com.kshrd.ipcam.entity.user.User;
  * Created by rina on 12/23/16.
  */
 public class IPCameraInputer {
-    @JsonProperty("SERIAL_NUMBER")
-    private String serial_number;
 
     @JsonProperty("NAME")
     private  String name;
+
+    @JsonProperty("SERIAL_NUMBER")
+    private String serial_number;
 
     @JsonProperty("IP_ADDRESS")
     private String ip_address;
@@ -29,15 +30,27 @@ public class IPCameraInputer {
     @JsonProperty("PASSWORD")
     private String password;
 
-    @JsonProperty("STREAM_URL")
-    private String stream_url;
+    @JsonProperty("MODEL_ID")
+    private int model_id;
 
+    @JsonProperty("USER_ID")
+    private int user_id;
 
-    @JsonProperty("MODEL")
-    private Model model;
+    public int getModel_id() {
+        return model_id;
+    }
 
-    @JsonProperty("USER")
-    private User user;
+    public void setModel_id(int model_id) {
+        this.model_id = model_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 
     public String getName() {
         return name;
@@ -71,15 +84,4 @@ public class IPCameraInputer {
 
     public void setPassword(String password) {this.password = password;}
 
-    public String getStream_url() {return stream_url;}
-
-    public void setStream_url(String stream_url) {this.stream_url = stream_url;}
-
-    public Model getModel() {return model;}
-
-    public void setModel(Model model) {this.model = model;}
-
-    public User getUser() {return user;}
-
-    public void setUser(User user) {this.user = user;}
 }
