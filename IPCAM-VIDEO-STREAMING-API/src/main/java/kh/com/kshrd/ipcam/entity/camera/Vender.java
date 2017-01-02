@@ -12,7 +12,7 @@ public class Vender extends BaseEntity{
 	@JsonProperty("LOGO")
 	private String logo;
 
-	@JsonProperty("name")
+	@JsonProperty("NAME")
 	private  String name;
 
 	public int getVender_id() {
