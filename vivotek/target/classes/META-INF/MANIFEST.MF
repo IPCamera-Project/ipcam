@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1483454591797
+Bnd-LastModified: 1483530301835
 Build-Jdk: 1.8.0_111
 Built-By: rina
 Bundle-Activator: kh.com.kshrd.vivotek.ServiceProvider
