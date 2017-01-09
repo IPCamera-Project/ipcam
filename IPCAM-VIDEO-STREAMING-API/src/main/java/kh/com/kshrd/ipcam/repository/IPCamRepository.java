@@ -84,7 +84,9 @@ public interface IPCamRepository {
 
 	@Select("SELECT tc.*, tu.* FROM tbl_camera tc LEFT JOIN tbl_user tu ON tc.user_id = tu.user_id WHERE tu.user_id = #{userId} AND tu.active = 1 AND tc.active = 1 ")
 	@Results({
-			@Result(property="model", column="model_id", one = @One(select = "kh.com.kshrd.ipcam.repository.ModelRepository.findOne"))
+			@Result(property="model", column="model_id", one = @One(select = "kh.com.kshrd.ipcam.repository.ModelRepository.findOne")),
+			@Result(property = "user", column = "user_id",one = @One(select = "kh.com.kshrd.ipcam.repository.UserRepository.getUserByID"))
+
 	})
 	List<IPCam> getCamByUserId(@Param("userId") int userId);
 
