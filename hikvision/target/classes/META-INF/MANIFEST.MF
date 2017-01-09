@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1483687434720
+Bnd-LastModified: 1483947267121
 Build-Jdk: 1.8.0_111
 Built-By: rina
 Bundle-Activator: kh.com.kshrd.hikvision.HikvisionConsumer

@@ -74,6 +74,17 @@ public class UserController {
 		return userResponseObject;
 	}
 
+	@GetMapping("/emailChecker")
+	boolean emailChecker(@RequestParam("EMAIL")String email){
+
+		if (userService.emailChecker(email)){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	@PostMapping("/addUser")
 	Response adduser(@RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email
@@ -204,4 +215,6 @@ public class UserController {
 
 		return filepath;
 	}
+
+
 }
