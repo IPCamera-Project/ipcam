@@ -5,6 +5,7 @@ import kh.com.kshrd.ipcam.entity.form.ModelModifier;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -12,6 +13,7 @@ public interface ModelRepository {
 
 	final String GET_ALL_MODEL	=	"select * from tbl_model where active = 1";
 
+	String GET_MODEL_NAME = "select name from tbl_model where vender_id = #{VENDER_ID} and active = 1";
 
 	final String GET_MODEL_BY_ID =	"select * from tbl_model where active = 1 and model_id = #{model_id}";
 
@@ -34,6 +36,10 @@ public interface ModelRepository {
 
 	})
 	Model findOne(@Param("model_id") int model_id);
+
+	@Select(GET_MODEL_NAME)
+	ArrayList<String> getAllModelName(@Param("VENDER_ID")int vender_id);
+
 
 	@Select(GET_ALL_MODEL)
 	@Results({

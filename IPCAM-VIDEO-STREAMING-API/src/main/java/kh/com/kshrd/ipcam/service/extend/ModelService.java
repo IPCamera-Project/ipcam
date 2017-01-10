@@ -7,6 +7,7 @@ import kh.com.kshrd.ipcam.entity.plugin.Plugin;
 import kh.com.kshrd.ipcam.service.CrudService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,8 @@ import java.util.List;
 public interface ModelService {
 
 	Model getModelById(int id);
+
+	ArrayList<String> getAllModelName(int vender_id);
 
 	List<Model> getAllModel();
 

@@ -1,5 +1,6 @@
 package kh.com.kshrd.ipcam.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kh.com.kshrd.ipcam.entity.form.ModelInputer;
@@ -23,6 +24,10 @@ public class ModelServiceImpl implements ModelService {
     @Autowired
     ModelRepository modelRepository;
 
+    @Override
+    public ArrayList<String> getAllModelName(int vender_id){
+      return modelRepository.getAllModelName(vender_id);
+    }
 
     @Override
     public Model getModelById(int id) {

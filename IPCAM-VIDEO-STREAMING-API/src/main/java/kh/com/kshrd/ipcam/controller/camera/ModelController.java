@@ -1,6 +1,7 @@
 package kh.com.kshrd.ipcam.controller.camera;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import java.lang.String;
 import kh.com.kshrd.ipcam.entity.camera.Model;
 import kh.com.kshrd.ipcam.entity.form.ModelInputer;
 import kh.com.kshrd.ipcam.entity.form.ModelModifier;
@@ -65,6 +66,36 @@ public class ModelController {
 
         return response;
     }
+
+    @RequestMapping(value = "/getModelNameByVenderId",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    @ResponseBody
+    public ResponseObject<String> getModelNameByVenderId(@RequestParam("VENDER_ID")int vender_id){
+        ResponseObject<java.lang.String> response  = new ResponseObject<>();
+        ArrayList<java.lang.String> modelName = modelService.getAllModelName(vender_id);
+
+        try{
+            if(modelName!=null){
+                response.setCode(ResponseCode.QUERY_FOUND);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+                response.setData(modelName);
+            }
+            else {
+                response.setCode(ResponseCode.QUERY_NOT_FOUND);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            response.setCode(ResponseCode.QUERY_NOT_FOUND);
+            response.setMessage(ResponseMessage.MODEL_MESSAGE);
+        }
+
+        return response;
+    }
+
+
 
     @RequestMapping(value = "/getModelById", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
