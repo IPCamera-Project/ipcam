@@ -67,13 +67,13 @@ public class ModelController {
         return response;
     }
 
-    @RequestMapping(value = "/getModelNameByVenderId",
+    @RequestMapping(value = "/getModelNameByVenderName",
             method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
-    public ResponseObject<String> getModelNameByVenderId(@RequestParam("VENDER_ID")int vender_id){
+    public ResponseObject<String> getModelNameByVenderName(@RequestParam("VENDER_NAME")String vender_name){
         ResponseObject<java.lang.String> response  = new ResponseObject<>();
-        ArrayList<java.lang.String> modelName = modelService.getAllModelName(vender_id);
+        ArrayList<java.lang.String> modelName = modelService.getAllModelName(vender_name);
 
         try{
             if(modelName!=null){

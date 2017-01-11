@@ -18,7 +18,7 @@ public interface ModelService {
 
 	Model getModelById(int id);
 
-	ArrayList<String> getAllModelName(int vender_id);
+	ArrayList<String> getAllModelName(String vender_name);
 
 	List<Model> getAllModel();
 

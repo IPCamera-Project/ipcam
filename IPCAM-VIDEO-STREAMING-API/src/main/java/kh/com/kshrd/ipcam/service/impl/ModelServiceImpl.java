@@ -25,8 +25,8 @@ public class ModelServiceImpl implements ModelService {
     ModelRepository modelRepository;
 
     @Override
-    public ArrayList<String> getAllModelName(int vender_id){
-      return modelRepository.getAllModelName(vender_id);
+    public ArrayList<String> getAllModelName(String vender_name){
+      return modelRepository.getAllModelName(vender_name);
     }
 
     @Override
