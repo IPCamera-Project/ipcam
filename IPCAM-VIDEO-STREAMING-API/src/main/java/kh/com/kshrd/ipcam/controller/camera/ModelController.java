@@ -5,10 +5,7 @@ import java.lang.String;
 import kh.com.kshrd.ipcam.entity.camera.Model;
 import kh.com.kshrd.ipcam.entity.form.ModelInputer;
 import kh.com.kshrd.ipcam.entity.form.ModelModifier;
-import kh.com.kshrd.ipcam.respone.Response;
-import kh.com.kshrd.ipcam.respone.ResponseCode;
-import kh.com.kshrd.ipcam.respone.ResponseMessage;
-import kh.com.kshrd.ipcam.respone.ResponseObject;
+import kh.com.kshrd.ipcam.respone.*;
 import kh.com.kshrd.ipcam.service.impl.ModelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -68,12 +65,12 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/getModelNameByVenderName",
-            method = RequestMethod.GET,
-            produces = "application/json")
+                    method = RequestMethod.GET,
+                   produces = "application/json")
     @ResponseBody
-    public ResponseObject<String> getModelNameByVenderName(@RequestParam("VENDER_NAME")String vender_name){
-        ResponseObject<java.lang.String> response  = new ResponseObject<>();
-        ArrayList<java.lang.String> modelName = modelService.getAllModelName(vender_name);
+    public ResponseList<Model> getModelNameByVenderName(@RequestParam("VENDER_NAME")String vender_name){
+        ResponseList<Model> response = new ResponseList<>();
+        ArrayList<Model> modelName = modelService.getAllModelName(vender_name);
 
         try{
             if(modelName!=null){
@@ -133,6 +130,7 @@ public class ModelController {
     public Response addModel(@RequestParam("NAME")String name,
                                       @RequestParam("VENDER_ID")int vender_id,
                                       @RequestParam("PLUGIN_ID")int plugin_id,
+                                      @RequestParam("STREAM_URL")String stream_url,
                                       @RequestParam("FILE_IMAGE")MultipartFile multipartFile){
 
 
@@ -151,6 +149,7 @@ public class ModelController {
         modelInputer.setVender_id(vender_id);
         modelInputer.setImage(randomFileName);
         modelInputer.setPlugin_id(plugin_id);
+        modelInputer.setStream_url(stream_url);
 
 
         Map<String,Object> map = new HashMap<>();
@@ -188,6 +187,7 @@ public class ModelController {
                                 @RequestParam("NAME")String name,
                                 @RequestParam("VENDER_ID")int vender_id,
                                 @RequestParam("PLUGIN_ID")int plugin_id,
+                                @RequestParam("STREAM_URL")String stream_url,
                                 @RequestParam("FILE_IMAGE")MultipartFile multipartFile){
 
         Response response = new Response();
@@ -206,6 +206,8 @@ public class ModelController {
             modelModifier.setVender_id(vender_id);
             modelModifier.setImage(randomFileName);
             modelModifier.setPlugin_id(plugin_id);
+            modelModifier.setStream_url(stream_url);
+
 
         if(modelService.update(modelModifier)){
             response.setMessage(ResponseCode.UPDATE_SUCCESS);

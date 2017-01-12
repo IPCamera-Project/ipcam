@@ -21,7 +21,7 @@ public interface IPCamRepository {
 	
 	
 	final String UPDATE_CAMERA_BY_ID	=	"UPDATE tbl_camera SET name=#{name},serial_number=#{serial_number}," +
-			                                "ip_address=#{ip_address},web_port=#{web_port},rtsp_port=#{rtsp}," +
+			                                "ip_address=#{ip_address},web_port=#{web_port},rtsp_port=#{rtsp_port}," +
 			                                "username=#{username},password=#{password},model_id=#{model_id},user_id=#{user_id}" +
 			                                " WHERE camera_id=#{camera_id}";
 	

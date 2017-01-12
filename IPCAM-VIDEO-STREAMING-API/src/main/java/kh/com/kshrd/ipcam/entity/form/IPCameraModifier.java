@@ -39,6 +39,15 @@ public class IPCameraModifier {
     @JsonProperty("USER_ID")
     private int user_id;
 
+
+    public int getCamera_id() {
+        return camera_id;
+    }
+
+    public void setCamera_id(int camera_id) {
+        this.camera_id = camera_id;
+    }
+
     public int getModel_id() {
         return model_id;
     }

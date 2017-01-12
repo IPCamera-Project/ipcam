@@ -115,6 +115,16 @@ public class IPCamController {
 	public Response updateCameraByID(IPCameraModifier ipCameraModifier)
 	{
 		Response res=new Response();
+		System.out.print(ipCameraModifier.getCamera_id());
+		System.out.print(ipCameraModifier.getIp_address());
+		System.out.print(ipCameraModifier.getName());
+		System.out.print(ipCameraModifier.getPassword());
+		System.out.print(ipCameraModifier.getUsername());
+		System.out.print(ipCameraModifier.getIp_address());
+		System.out.print(ipCameraModifier.getWeb_port());
+		System.out.print(ipCameraModifier.getRtsp_port());
+		System.out.print(ipCameraModifier.getModel_id());
+
 
 		if(service.update(ipCameraModifier))
 		{

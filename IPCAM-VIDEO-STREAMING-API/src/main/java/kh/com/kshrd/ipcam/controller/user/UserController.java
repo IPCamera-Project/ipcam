@@ -92,7 +92,7 @@ public class UserController {
 					 @RequestParam("ROLE_ID")  int role_id){
 
 		Response response = new Response();
-
+				System.out.print("fddkdfkdfkjdfkjdf"+multipartFile);
 		String genName =	fileNameGen(fileNameGen(multipartFile.getOriginalFilename()));
 
 		UserInputer userInputer = new UserInputer();
@@ -199,9 +199,10 @@ public class UserController {
 		String randomFileName = UUID.randomUUID()+"."+output[1];
 		randomFileName = randomFileName+"";
 
-		String directory = environment.getProperty("file.upload.path");
+			String directory = environment.getProperty("file.upload.path");
+			filepath = Paths.get(directory, randomFileName).toString();
 
-		filepath = Paths.get(directory, randomFileName).toString();
+
 
 		return randomFileName;
 	}
