@@ -1,11 +1,11 @@
 kh/com/kshrd/core/Transformer.class
-kh/com/kshrd/core/plugin/TestPlugin.class
 kh/com/kshrd/core/plugin/PluginManager.class
+kh/com/kshrd/core/plugin/TestPlugin.class
 kh/com/kshrd/core/TransformerFactory.class
 kh/com/kshrd/core/utils/FileManager.class
 kh/com/kshrd/core/buffer/StreamBuffer.class
-kh/com/kshrd/core/Client.class
 kh/com/kshrd/core/plugin/PermissionLoader.class
+kh/com/kshrd/core/Client.class
 kh/com/kshrd/core/utils/ExtensionFile.class
 kh/com/kshrd/core/RtspCamera.class
 kh/com/kshrd/core/utils/StringUtils.class
@@ -28,8 +28,8 @@ kh/com/kshrd/core/Client$Vivotek.class
 kh/com/kshrd/core/plugin/PluginLoader.class
 kh/com/kshrd/core/plugin/PluginPath.class
 kh/com/kshrd/core/utils/DirectoryFile.class
-kh/com/kshrd/core/utils/JarFileAccept.class
 kh/com/kshrd/core/utils/Tuple.class
+kh/com/kshrd/core/utils/JarFileAccept.class
 kh/com/kshrd/core/ExternalBase.class
 kh/com/kshrd/core/RtspStream.class
 kh/com/kshrd/core/plugin/PluginStateEvent.class

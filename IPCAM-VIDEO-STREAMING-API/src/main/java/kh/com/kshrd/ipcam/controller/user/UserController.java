@@ -196,9 +196,9 @@ public class UserController {
 	String fileNameGen(String filename){
 
 		String[] output = filename.split("\\.");//split string specific "."
-		String randomFileName = UUID.randomUUID()+"."+output[1];
+		String randomFileName = UUID.randomUUID()+"."+"jpg";
 		randomFileName = randomFileName+"";
-
+		System.out.println(randomFileName);
 			String directory = environment.getProperty("file.upload.path");
 			filepath = Paths.get(directory, randomFileName).toString();
 
