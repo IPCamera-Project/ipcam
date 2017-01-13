@@ -19,6 +19,12 @@ public class ModelModifier {
     @JsonProperty("IMAGE")
     private String image;
 
+    @JsonProperty("STREAM_URL")
+    private String stream_url;
+
+    public String getStream_url() {return stream_url;}
+    public void setStream_url(String stream_url) {this.stream_url = stream_url;}
+
     public int getModel_id() {
         return model_id;
     }

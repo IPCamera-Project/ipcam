@@ -30,6 +30,11 @@ public class IPCamServiceImpl implements IPCamService {
     }
 
     @Override
+    public List<IPCam> findCameraByUserId(int user_id) {
+        return ipCamRepository.getCamByUserId(user_id);
+    }
+
+    @Override
     public boolean remove(int id) {
         return ipCamRepository.remove(id);
     }
@@ -46,6 +51,6 @@ public class IPCamServiceImpl implements IPCamService {
 
     @Override
     public IPCam getCamOnce(int userId, int camId) {
-        return ipCamRepository.getCamByUserId(userId, camId);
+        return ipCamRepository.getCamOnce(userId, camId);
     }
 }

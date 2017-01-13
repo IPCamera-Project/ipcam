@@ -64,6 +64,15 @@ public interface UserRepository {
 	@Select(GET_ALL_USER)
 	ArrayList<User> getAllUser();
 
+	@Select("SELECT CASE WHEN " +
+			" email = #{email} THEN TRUE " +
+			" ELSE " +
+			" FALSE END " +
+			" FROM tbl_user " +
+			" ORDER BY 1 DESC" +
+			" limit 1")
+	boolean emailChecker(@Param("email")String email);
+
 	@Insert(INSERT_USER)
 	boolean addUser(UserInputer userInputer);
 

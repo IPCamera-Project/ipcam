@@ -39,31 +39,21 @@ public class UserController {
 
 	@GetMapping(value="/getUserById")
 	@ResponseBody
-	public ResponseEntity<Map<String,Object>> getUserByID(@RequestParam("ID") int id)
+	public ResponseObject<User> getUserByID(@RequestParam("ID") int id)
 	{
+		ResponseObject<User> userResponseObject = new ResponseObject<>();
+
 		User data= userService.getUserById(id);
 		data.setImage(getFilePath(data.getImage()));
 
-		Map<String,Object> map = new HashMap<>();
-		try{
-			if(data != null){
-				map.put("DATA",data)	;
-				map.put("MESSAGE","successfull");
-				map.put("STATUS","200");
-
-			}
-			else{
-				map.put("MESSAGE","Unsuccessfull");
-				map.put("STATUS","400");
-
-			}
+		if(userResponseObject!=null	){
+			userResponseObject.setCode(ResponseCode.QUERY_FOUND);
+			userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
+		}else{
+			userResponseObject.setCode(ResponseCode.QUERY_NOT_FOUND);
+			userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
 		}
-		catch (Exception e){
-			map.put("MESSAGE","Unsuccessfull");
-			map.put("STATUS","400");
-			map.put("Exception",e);
-		}
-		return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
+		return userResponseObject;
 	}
 
 	@GetMapping("/getUserByEmail")
@@ -84,6 +74,17 @@ public class UserController {
 		return userResponseObject;
 	}
 
+	@GetMapping("/emailChecker")
+	boolean emailChecker(@RequestParam("EMAIL")String email){
+
+		if (userService.emailChecker(email)){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	@PostMapping("/addUser")
 	Response adduser(@RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email
@@ -91,7 +92,7 @@ public class UserController {
 					 @RequestParam("ROLE_ID")  int role_id){
 
 		Response response = new Response();
-
+				System.out.print("fddkdfkdfkjdfkjdf"+multipartFile);
 		String genName =	fileNameGen(fileNameGen(multipartFile.getOriginalFilename()));
 
 		UserInputer userInputer = new UserInputer();
@@ -153,10 +154,10 @@ public class UserController {
 
 
 	@PutMapping("/updateUser")
-	Response updateUser(@RequestParam("USERNAME") String username
-			, @RequestParam("EMAIL") String email
-			, @RequestParam("PASSWORD") String password){
+	Response updateUser(@RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email, @RequestParam("PASSWORD") String password){
+
 		Response response = new Response();
+
 		UserInputer userInputer = new UserInputer();
 		userInputer.setUsername(username);
 		userInputer.setEmail(email);
@@ -198,9 +199,10 @@ public class UserController {
 		String randomFileName = UUID.randomUUID()+"."+output[1];
 		randomFileName = randomFileName+"";
 
-		String directory = environment.getProperty("file.upload.path");
+			String directory = environment.getProperty("file.upload.path");
+			filepath = Paths.get(directory, randomFileName).toString();
 
-		filepath = Paths.get(directory, randomFileName).toString();
+
 
 		return randomFileName;
 	}
@@ -214,4 +216,6 @@ public class UserController {
 
 		return filepath;
 	}
+
+
 }

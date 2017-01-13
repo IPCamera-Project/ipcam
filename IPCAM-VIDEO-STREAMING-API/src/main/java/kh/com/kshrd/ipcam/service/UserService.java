@@ -8,6 +8,7 @@ import kh.com.kshrd.ipcam.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.List;
@@ -39,8 +40,9 @@ public class UserService  {
 
     public boolean updateUserImage(String image, int user_id) {return userRepository.updateUserImage(image,user_id);}
 
-    public boolean addUser(UserInputer object) {
+    public boolean addUser(UserInputer object) {return userRepository.addUser(object);}
 
-        return userRepository.addUser(object);
+    public boolean emailChecker(String email){
+        return userRepository.emailChecker(email);
     }
 }

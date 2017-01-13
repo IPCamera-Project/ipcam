@@ -33,87 +33,11 @@ public class IPCameraModifier {
     @JsonProperty("PASSWORD")
     private String password;
 
-    @JsonProperty("STREAM_URL")
-    private String stream_url;
+    @JsonProperty("MODEL_ID")
+    private int model_id;
 
-
-    @JsonProperty("MODEL")
-    private Model model;
-
-    @JsonProperty("USER")
-    private User user;
-
-    public String getSerial_number() {
-        return serial_number;
-    }
-
-    public void setSerial_number(String serial_number) {
-        this.serial_number = serial_number;
-    }
-
-    public String getIp_address() {
-        return ip_address;
-    }
-
-    public void setIp_address(String ip_address) {
-        this.ip_address = ip_address;
-    }
-
-    public int getWeb_port() {
-        return web_port;
-    }
-
-    public void setWeb_port(int web_port) {
-        this.web_port = web_port;
-    }
-
-    public int getRtsp_port() {
-        return rtsp_port;
-    }
-
-    public void setRtsp_port(int rtsp_port) {
-        this.rtsp_port = rtsp_port;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getStream_url() {
-        return stream_url;
-    }
-
-    public void setStream_url(String stream_url) {
-        this.stream_url = stream_url;
-    }
-
-    public Model getModel() {
-        return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+    @JsonProperty("USER_ID")
+    private int user_id;
 
 
     public int getCamera_id() {
@@ -124,6 +48,22 @@ public class IPCameraModifier {
         this.camera_id = camera_id;
     }
 
+    public int getModel_id() {
+        return model_id;
+    }
+
+    public void setModel_id(int model_id) {
+        this.model_id = model_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     public String getName() {
         return name;
     }
@@ -131,5 +71,29 @@ public class IPCameraModifier {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getSerial_number() {return serial_number;}
+
+    public void setSerial_number(String serial_number) {this.serial_number = serial_number;}
+
+    public String getIp_address() {return ip_address;}
+
+    public void setIp_address(String ip_address) {this.ip_address = ip_address;}
+
+    public int getWeb_port() {return web_port;}
+
+    public void setWeb_port(int web_port) {this.web_port = web_port;}
+
+    public int getRtsp_port() {return rtsp_port;}
+
+    public void setRtsp_port(int rtsp_port) {this.rtsp_port = rtsp_port;}
+
+    public String getUsername() {return username;}
+
+    public void setUsername(String username) {this.username = username;}
+
+    public String getPassword() {return password;}
+
+    public void setPassword(String password) {this.password = password;}
 
 }

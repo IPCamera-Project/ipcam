@@ -5,9 +5,8 @@ import kh.com.kshrd.ipcam.entity.user.User;
 
 public class IPCam {
 
-	@JsonProperty("COMMERA_ID")
+	@JsonProperty("CAMERA_ID")
 	private int camera_id;
-
 
 	@JsonProperty("NAME")
 	private String name;
@@ -29,9 +28,6 @@ public class IPCam {
 	
 	@JsonProperty("PASSWORD")
 	private String password;
-	
-	@JsonProperty("STREAM_URL")
-	private String stream_url;
 
 	@JsonProperty("MODEL")
 	private Model model;
@@ -102,15 +98,7 @@ public class IPCam {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public String getStream_url() {
-		return stream_url;
-	}
-	
-	public void setStream_url(String stream_url) {
-		this.stream_url = stream_url;
-	}
-	
+
 	public Model getModel() {
 		return model;
 	}
@@ -127,10 +115,4 @@ public class IPCam {
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "IPCam [serial_number=" + serial_number + ", ip_address=" + ip_address + ", web_port=" + web_port
-				+ ", rtsp_port=" + rtsp_port + ", username=" + username + ", password=" + password + ", stream_url="
-				+ stream_url + ", model=" + model + ", user=" + user + "]";
-	}
 }
