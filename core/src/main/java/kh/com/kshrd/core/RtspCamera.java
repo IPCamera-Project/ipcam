@@ -116,13 +116,13 @@ public class RtspCamera extends IpCamera implements Runnable {
         long cnt = 0;
         while(rtspContinue) {
             try {
-                rtspStream.setHandler(client);
+                //rtspStream.setHandler(client);
                 rtspStream.initialize();
 
                 logger.debug("Rtsp {}: start connect", url);
                 if (rtspStream.open(url)) {
                     while(rtspContinue) {
-                        byte[] packet = rtspStream.read();
+                        byte[] packet = rtspStream.read(url);
                         if (packet == null) {
                             logger.info("Rtsp {}: data receive failed", url);
                             break;
@@ -139,7 +139,7 @@ public class RtspCamera extends IpCamera implements Runnable {
 
                 // sleep for next connect
                 for(int i=0; rtspContinue && i < 300; i++) {
-                    Thread.sleep(10);
+                    Thread.sleep(1);
                 }
             }
             catch (Exception ex) {

@@ -5,8 +5,8 @@ import kh.com.kshrd.ipcam.entity.user.User;
 
 public class IPCam {
 
-	@JsonProperty("COMMERA_ID")
-	private int camera_id;
+	@JsonProperty("CAMERA_ID")
+	private long camera_id;
 
 
 	@JsonProperty("NAME")
@@ -47,11 +47,11 @@ public class IPCam {
 		this.name = name;
 	}
 
-	public int getCamera_id() {
+	public long getCamera_id() {
 		return camera_id;
 	}
 
-	public void setCamera_id(int camera_id) {
+	public void setCamera_id(long camera_id) {
 		this.camera_id = camera_id;
 	}
 

@@ -32,7 +32,7 @@ public class RtspStream extends ExternalBase {
 
     private native long    createContextInternal(String home);
     private native boolean openRtspInternal(long handler, String url);
-    private native byte[]  readFrameInternal(long handler);
+    private native byte[]  readFrameInternal(long handler, String url);
     private native void    releaseContextInternal(long handler);
 
     static private String getNativePath() {
@@ -68,10 +68,10 @@ public class RtspStream extends ExternalBase {
         return false;
     }
 
-    public byte[] read()
+    public byte[] read(String url)
     {
         if (handler != 0)
-            return readFrameInternal(handler);
+            return readFrameInternal(handler, url);
 
         return null;
     }

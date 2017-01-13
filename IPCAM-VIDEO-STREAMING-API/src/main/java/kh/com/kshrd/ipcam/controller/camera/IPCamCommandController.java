@@ -83,19 +83,8 @@ public class IPCamCommandController {
         Tuple loadClass = loadClassService.loadClassService(email,camera);
         pluginStateEvent = (PluginStateEvent) loadClass._1;
         IPCam ipCam = (IPCam) loadClass._2;
-        //System.out.println(pluginStateEvent.getClass().getName());
-//        beanConfiguration.setData(ipCam.getModel().getVender().getName(),
-//                ipCam.getModel().getName(), ipCam.getIp_address(),
-//                ipCam.getWeb_port(), ipCam.getUsername(), ipCam.getPassword(), ipCam.getRtsp_port(),
-//                pluginStateEvent.getRtsp(),
-//                pluginStateEvent.getClass()
-//        );
-
         logger.debug("Get RTSP: ",pluginStateEvent.getRtsp());
         do {
-              //beanConfiguration.init();
-//            RtspCamera cam = beanConfiguration.camera();
-//            beanConfiguration.init();
             BaseStream  cam = new BaseStream(ipCam.getModel().getVender().getName(),
                     ipCam.getModel().getName(),
                     ipCam.getIp_address(),
@@ -111,8 +100,6 @@ public class IPCamCommandController {
                 System.out.println(ipCam.getModel().getName());
                 System.out.println(ipCam.getIp_address());
                 System.out.println(pluginStateEvent.getRtsp());
-//            BaseStream cam = new BaseStream("hikvision", "DS-2CD2Q10FD-IW", "192.168.0.29", 80, "admin", "12345", 554, "/Streaming/Channels/102");
-//                    System.out.println(cam.getRtspPath());
             if (cam == null) {
                 logger.info("stream command: {} was failed: object not found", camera);
                 break;
@@ -151,15 +138,5 @@ public class IPCamCommandController {
 
         } while(false);
     }
-
-//    @PreDestroy
-//    public void destroy(){
-//        cam.release();
-//    }
-
-//    @PostConstruct
-//    public void init(){
-//        cam.initialize();
-//    }
 
 }

@@ -1,6 +1,5 @@
 package kh.com.kshrd.ipcam.service;
 
-import com.sun.istack.internal.Nullable;
 import kh.com.kshrd.ipcam.repository.UserDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,7 @@ public class UserDetailService {
     @Autowired
     UserDetailRepository userDetailRepository;
 
-   public boolean insertRole(int userId, @Nullable int roleId){
+   public boolean insertRole(int userId, int roleId){
         return  userDetailRepository.insertRole(userId,roleId);
     }
 
