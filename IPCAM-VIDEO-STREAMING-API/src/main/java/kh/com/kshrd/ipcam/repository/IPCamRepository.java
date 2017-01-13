@@ -17,7 +17,7 @@ public interface IPCamRepository {
 	final String GET_CAMERA_BY_ID		=	"SELECT * FROM tbl_camera WHERE camera_id = #{camera_id}";
 
 
-	final String DELETE_CAMERA_BY_ID	=	"DELETE FROM tbl_camera WHERE camera_id = #{id}";
+	final String DELETE_CAMERA_BY_ID	=	"UPDATE  tbl_camera set active=0 WHERE camera_id = #{id}";
 	
 	
 	final String UPDATE_CAMERA_BY_ID	=	"UPDATE tbl_camera SET name=#{name},serial_number=#{serial_number}," +

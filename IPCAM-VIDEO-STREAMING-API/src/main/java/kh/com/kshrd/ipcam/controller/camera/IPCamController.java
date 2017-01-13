@@ -80,10 +80,11 @@ public class IPCamController {
 	@RequestMapping(value="/removeCameraById",method=RequestMethod.DELETE)
 	public Response deleteCameraByID(@RequestParam("ID") int id)
 	{
-	
-		boolean status=service.remove(id);
+
 		Response res=new Response();
-		if(status){
+
+
+		if(service.remove(id)){
 			res.setCode(ResponseCode.DELETE_SUCCESS);
 			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
 		}
@@ -112,7 +113,7 @@ public class IPCamController {
 	}
 
 	@RequestMapping(value="/updateCamera",method=RequestMethod.PUT)
-	public Response updateCameraByID(IPCameraModifier ipCameraModifier)
+	public Response updateCameraByID(@RequestBody IPCameraModifier ipCameraModifier)
 	{
 		Response res=new Response();
 		System.out.print(ipCameraModifier.getCamera_id());
