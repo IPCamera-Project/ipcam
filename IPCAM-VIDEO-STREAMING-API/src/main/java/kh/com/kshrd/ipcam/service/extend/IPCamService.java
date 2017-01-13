@@ -17,6 +17,8 @@ public interface IPCamService {
 
     List<IPCam> findAll();
 
+    List<IPCam> findCameraByUserId(int user_id);
+
     boolean remove(int id);
 
     boolean update(IPCameraModifier object);

@@ -1,13 +1,11 @@
 package kh.com.kshrd.ipcam.controller.camera;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import java.lang.String;
 import kh.com.kshrd.ipcam.entity.camera.Model;
 import kh.com.kshrd.ipcam.entity.form.ModelInputer;
 import kh.com.kshrd.ipcam.entity.form.ModelModifier;
-import kh.com.kshrd.ipcam.respone.Response;
-import kh.com.kshrd.ipcam.respone.ResponseCode;
-import kh.com.kshrd.ipcam.respone.ResponseMessage;
-import kh.com.kshrd.ipcam.respone.ResponseObject;
+import kh.com.kshrd.ipcam.respone.*;
 import kh.com.kshrd.ipcam.service.impl.ModelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -19,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -65,9 +64,37 @@ public class ModelController {
         return response;
     }
 
-    @RequestMapping(  value = "/getModelById",
-            method = RequestMethod.GET,
-            produces = "application/json")
+    @RequestMapping(value = "/getModelNameByVenderName",
+                    method = RequestMethod.GET,
+                   produces = "application/json")
+    @ResponseBody
+    public ResponseList<Model> getModelNameByVenderName(@RequestParam("VENDER_NAME")String vender_name){
+        ResponseList<Model> response = new ResponseList<>();
+        ArrayList<Model> modelName = modelService.getAllModelName(vender_name);
+
+        try{
+            if(modelName!=null){
+                response.setCode(ResponseCode.QUERY_FOUND);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+                response.setData(modelName);
+            }
+            else {
+                response.setCode(ResponseCode.QUERY_NOT_FOUND);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            response.setCode(ResponseCode.QUERY_NOT_FOUND);
+            response.setMessage(ResponseMessage.MODEL_MESSAGE);
+        }
+
+        return response;
+    }
+
+
+
+    @RequestMapping(value = "/getModelById", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public ResponseObject<Model> getModelById(@RequestParam("model_id")int model_id){
         ResponseObject<Model> response  = new ResponseObject<>();
@@ -100,13 +127,14 @@ public class ModelController {
     Environment environment;
     @RequestMapping(value = "/addModel",method=RequestMethod.POST,consumes = "multipart/form-data;charset=UTF-8")
     @ResponseBody
-    public ResponseEntity<?> addModel(@RequestParam("NAME")String name,
+    public Response addModel(@RequestParam("NAME")String name,
                                       @RequestParam("VENDER_ID")int vender_id,
                                       @RequestParam("PLUGIN_ID")int plugin_id,
+                                      @RequestParam("STREAM_URL")String stream_url,
                                       @RequestParam("FILE_IMAGE")MultipartFile multipartFile){
 
 
-
+        Response response = new Response();
 
         String   filename = multipartFile.getOriginalFilename();
         String[] output = filename.split("\\.");//split string specific "."
@@ -121,6 +149,7 @@ public class ModelController {
         modelInputer.setVender_id(vender_id);
         modelInputer.setImage(randomFileName);
         modelInputer.setPlugin_id(plugin_id);
+        modelInputer.setStream_url(stream_url);
 
 
         Map<String,Object> map = new HashMap<>();
@@ -133,31 +162,63 @@ public class ModelController {
                 stream.write(multipartFile.getBytes());
                 stream.close();
 
-                map.put("CODE", HttpStatus.OK);
-                map.put("MESSAGE","SUCESSFULL");
+                response.setCode(ResponseCode.INSERT_SUCCESS);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
             }
             else {
-                map.put("MESSAGE","UNSUCESSFULL");
+                response.setCode(ResponseCode.INSERT_FAIL);
+                response.setMessage(ResponseMessage.MODEL_MESSAGE);
             }
+            return  response;
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return null;
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
 
-    @RequestMapping(value = "/updateModel",
-            method = RequestMethod.PUT,
-            produces = "application/json")
+    @RequestMapping( value = "/updateModel",
+                     method = RequestMethod.PUT,
+                     produces = "application/json")
     @ResponseBody
-    public Response updateModel(@RequestBody ModelModifier modelModifier){
+    public Response updateModel(@RequestParam("MODEL_ID")int model_id,
+                                @RequestParam("NAME")String name,
+                                @RequestParam("VENDER_ID")int vender_id,
+                                @RequestParam("PLUGIN_ID")int plugin_id,
+                                @RequestParam("STREAM_URL")String stream_url,
+                                @RequestParam("FILE_IMAGE")MultipartFile multipartFile){
+
         Response response = new Response();
+
+        String   filename = multipartFile.getOriginalFilename();
+        String[] output = filename.split("\\.");//split string specific "."
+        String randomFileName = UUID.randomUUID()+"."+output[1];
+        randomFileName = randomFileName+"";
+
+        String directory = environment.getProperty("file.upload.path");
+        String filepath = Paths.get(directory, randomFileName).toString();
+
+        ModelModifier modelModifier = new ModelModifier();
+            modelModifier.setModel_id(model_id);
+            modelModifier.setName(name);
+            modelModifier.setVender_id(vender_id);
+            modelModifier.setImage(randomFileName);
+            modelModifier.setPlugin_id(plugin_id);
+            modelModifier.setStream_url(stream_url);
+
+
         if(modelService.update(modelModifier)){
             response.setMessage(ResponseCode.UPDATE_SUCCESS);
             response.setCode(ResponseMessage.MODEL_MESSAGE);
+
+            // Save the file locally
+          try {
+              BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(filepath));
+              stream.write(multipartFile.getBytes());
+              stream.close();
+            } catch (IOException e) {e.printStackTrace();}
         }
         else {
             response.setCode(ResponseMessage.MODEL_MESSAGE);
@@ -167,9 +228,8 @@ public class ModelController {
     }
 
 
-    @RequestMapping(value = "/removeModel",
-            method = RequestMethod.DELETE,
-            produces = "application/json")
+    @RequestMapping(value = "/removeModel", method = RequestMethod.DELETE,
+                      produces = "application/json")
     @ResponseBody
     public  Response removeModel(@RequestParam("model_id") int model_id){
         Response response = new Response();
