@@ -125,7 +125,7 @@ public class UserController {
 	@PostMapping("/addFacebookAccount")
 	Response adduserWithFacebookAccount( @RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email
 								     	,@RequestParam("PASSWORD") String password, @RequestParam("USER_PROFILE")String url_image,
-								 		 @RequestParam("USER_FACEBOOK_ID")int user_facebook_id){
+								 		 @RequestParam("USER_FACEBOOK_ID")String user_facebook_id){
 
 		Response response = new Response();
 
