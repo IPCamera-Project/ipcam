@@ -42,6 +42,8 @@ public class UserService  {
 
     public boolean addUser(UserInputer object) {return userRepository.addUser(object);}
 
+    public boolean adduserWithFacebookAccount(UserInputer object) {return userRepository.adduserWithFacebookAccount(object);}
+
     public boolean emailChecker(String email){
         return userRepository.emailChecker(email);
     }
