@@ -182,6 +182,35 @@ public class UserController {
 		return response;
 	}
 
+	@PutMapping("/updateUserName")
+	Response updateUserName(@RequestParam("USERNAME") String username, @RequestParam("USER_ID") int user_id){
+
+		Response response = new Response();
+
+		if(userService.modifierUsername(username,user_id)){
+			response.setCode(ResponseCode.INSERT_SUCCESS);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}else{
+			response.setCode(ResponseCode.INSERT_FAIL);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}
+		return response;
+	}
+
+	@PutMapping("/updateUserPassword")
+	Response updateUserPassword(@RequestParam("PASSWORD") String password, @RequestParam("USER_ID") int user_id){
+
+		Response response = new Response();
+
+		if(userService.modifierUsername(password,user_id)){
+			response.setCode(ResponseCode.INSERT_SUCCESS);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}else{
+			response.setCode(ResponseCode.INSERT_FAIL);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}
+		return response;
+	}
 
 	@PutMapping("/updateUser")
 	Response updateUser(@RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email, @RequestParam("PASSWORD") String password){
