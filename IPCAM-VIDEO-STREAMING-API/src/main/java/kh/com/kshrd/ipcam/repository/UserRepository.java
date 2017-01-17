@@ -32,8 +32,18 @@ public interface UserRepository {
 	final String INSERT_USER = "INSERT INTO tbl_user(username,password,email,image) " +
 			"VALUES(#{username},#{password},#{email},#{image})";
 
+	final String INSERT_FACEBOOK_ACCOUNT = "INSERT INTO tbl_user(username,password,email,image,user_facebook_id) " +
+			"VALUES(#{username},#{password},#{email},#{image},#{user_facebook_id})";
+
 	final String UPDATE_USER = "UPDATE tbl_user set (#{username,},#{password},#{email}) " +
 			"WHERE user_id = #{user_id}";
+
+	final String UPDATE_USER_NAME = "UPDATE tbl_user set username= #{username} " +
+			"WHERE user_id = #{user_id}";
+
+	final String UPDATE_USER_PASSWORD = "UPDATE tbl_user set password= #{password} " +
+			"WHERE user_id = #{user_id}";
+
 
 	final String UPDATE_USER_IMAGE = "UPDATE tbl_user set image = #{image} where user_id = #{user_id}";
 
@@ -73,8 +83,21 @@ public interface UserRepository {
 			" limit 1")
 	boolean emailChecker(@Param("email")String email);
 
+	@Update(UPDATE_USER_NAME)
+	boolean modifierUserName(@Param("username")String username,@Param("user_id")int user_id);
+
+	@Update(UPDATE_USER_PASSWORD)
+	boolean modifierUserPassword(@Param("password")String username,@Param("user_id")int user_id);
+
+
 	@Insert(INSERT_USER)
 	boolean addUser(UserInputer userInputer);
+
+	@Insert(INSERT_USER)
+	boolean updatteUsername(String username,int user_id);
+
+	@Insert(INSERT_FACEBOOK_ACCOUNT)
+	boolean adduserWithFacebookAccount(UserInputer userInputer);
 
 	@Update(UPDATE_USER)
 	boolean updateUser(UserModifier userModifier);

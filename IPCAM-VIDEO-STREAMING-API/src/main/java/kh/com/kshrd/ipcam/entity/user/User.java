@@ -2,7 +2,7 @@ package kh.com.kshrd.ipcam.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class User{
+public class  User{
 
 	@JsonProperty("USER_ID")
 	private  int user_id;
@@ -22,8 +22,22 @@ public class User{
 	@JsonProperty("STATUS")
 	protected boolean status;
 
+
 	@JsonProperty("ROLE")
 	private  Role role;
+
+
+	@JsonProperty("USER_FACEBOOK_ID")
+	private int user_facebook_id;
+
+	public int getUser_facebook_id() {
+		return user_facebook_id;
+	}
+
+	public void setUser_facebook_id(int user_facebook_id) {
+		this.user_facebook_id = user_facebook_id;
+	}
+
 
 	public int getUser_id() {
 		return user_id;

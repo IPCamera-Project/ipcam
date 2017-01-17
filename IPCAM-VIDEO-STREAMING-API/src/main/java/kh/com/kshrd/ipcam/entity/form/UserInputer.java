@@ -23,6 +23,17 @@ public class UserInputer {
     @JsonProperty("ROLE_ID")
     protected  int role_id;
 
+    @JsonProperty("USER_FACEBOOK_ID")
+    private int user_facebook_id;
+
+    public int getUser_facebook_id() {
+        return user_facebook_id;
+    }
+
+    public void setUser_facebook_id(int user_facebook_id) {
+        this.user_facebook_id = user_facebook_id;
+    }
+
     public String getUsername() {
         return username;
     }

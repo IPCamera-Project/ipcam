@@ -122,6 +122,36 @@ public class UserController {
 		return response;
 	}
 
+	@PostMapping("/addFacebookAccount")
+	Response adduserWithFacebookAccount( @RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email
+								     	,@RequestParam("PASSWORD") String password, @RequestParam("USER_PROFILE")String url_image,
+								 		 @RequestParam("USER_FACEBOOK_ID")int user_facebook_id){
+
+		Response response = new Response();
+
+		UserInputer userInputer = new UserInputer();
+		userInputer.setUsername(username);
+		userInputer.setEmail(email);
+		userInputer.setPassword(password);
+		userInputer.setImage(url_image);
+		userInputer.setUser_facebook_id(user_facebook_id);
+		userInputer.setRole_id(1);
+
+		if(userService.adduserWithFacebookAccount(userInputer)){
+			response.setCode(ResponseCode.INSERT_SUCCESS);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+			// Save the file locally\
+			try {
+				userDetailService.insertRole(userDetailService.getLastId(),userInputer.getRole_id());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			response.setCode(ResponseCode.INSERT_FAIL);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}
+		return response;
+	}
 
 
 	@PutMapping("/updateUserImage")
@@ -152,6 +182,35 @@ public class UserController {
 		return response;
 	}
 
+	@PutMapping("/updateUserName")
+	Response updateUserName(@RequestParam("USERNAME") String username, @RequestParam("USER_ID") int user_id){
+
+		Response response = new Response();
+
+		if(userService.modifierUsername(username,user_id)){
+			response.setCode(ResponseCode.INSERT_SUCCESS);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}else{
+			response.setCode(ResponseCode.INSERT_FAIL);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}
+		return response;
+	}
+
+	@PutMapping("/updateUserPassword")
+	Response updateUserPassword(@RequestParam("PASSWORD") String password, @RequestParam("USER_ID") int user_id){
+
+		Response response = new Response();
+
+		if(userService.modifierUsername(password,user_id)){
+			response.setCode(ResponseCode.INSERT_SUCCESS);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}else{
+			response.setCode(ResponseCode.INSERT_FAIL);
+			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}
+		return response;
+	}
 
 	@PutMapping("/updateUser")
 	Response updateUser(@RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email, @RequestParam("PASSWORD") String password){
