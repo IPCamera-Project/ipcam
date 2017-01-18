@@ -1,6 +1,7 @@
 package kh.com.kshrd.ipcam.controller.user;
 
 import kh.com.kshrd.ipcam.entity.form.UserInputer;
+import kh.com.kshrd.ipcam.entity.form.UserModifier;
 import kh.com.kshrd.ipcam.entity.user.User;
 import kh.com.kshrd.ipcam.respone.Response;
 import kh.com.kshrd.ipcam.respone.ResponseCode;
@@ -46,13 +47,21 @@ public class UserController {
 		User data= userService.getUserById(id);
 		data.setImage(getFilePath(data.getImage()));
 
-		if(userResponseObject!=null	){
-			userResponseObject.setCode(ResponseCode.QUERY_FOUND);
-			userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
-		}else{
+		try{
+			if(userResponseObject!=null	){
+				userResponseObject.setCode(ResponseCode.QUERY_FOUND);
+				userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
+			}else{
+				userResponseObject.setCode(ResponseCode.QUERY_NOT_FOUND);
+				userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
+			}
+			}
+		catch (Exception e){
 			userResponseObject.setCode(ResponseCode.QUERY_NOT_FOUND);
-			userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
+			userResponseObject.setMessage(e.getMessage());
+
 		}
+
 		return userResponseObject;
 	}
 
@@ -61,19 +70,26 @@ public class UserController {
 		ResponseObject<User> userResponseObject = new ResponseObject<>();
 
 		User user = userService.getUserByEmail(email);
-		if(user.getImage().contains("http")){
-			user.setImage(user.getImage());
-		}else {
-			user.setImage(getFilePath(user.getImage()));
-		}
-		userResponseObject.setData(user);
+		try {
+			if(user.getImage().contains("http")){
+				user.setImage(user.getImage());
+			}else {
+				user.setImage(getFilePath(user.getImage()));
+			}
+			userResponseObject.setData(user);
 
-		if(userResponseObject!=null	){
-			userResponseObject.setCode(ResponseCode.QUERY_FOUND);
-			userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
-		}else{
+			if(userResponseObject!=null	){
+				userResponseObject.setCode(ResponseCode.QUERY_FOUND);
+				userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
+			}else{
+				userResponseObject.setCode(ResponseCode.QUERY_NOT_FOUND);
+				userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
+			}
+		}
+		catch (Exception e){
 			userResponseObject.setCode(ResponseCode.QUERY_NOT_FOUND);
-			userResponseObject.setMessage(ResponseMessage.USER_MESSAGE);
+			userResponseObject.setMessage(e.getMessage());
+
 		}
 		return userResponseObject;
 	}
@@ -105,30 +121,33 @@ public class UserController {
 			userInputer.setPassword(password);
 			userInputer.setImage(genName);
 			userInputer.setRole_id(role_id);
-
-		if(userService.addUser(userInputer)){
-			response.setCode(ResponseCode.INSERT_SUCCESS);
-			response.setMessage(ResponseMessage.USER_MESSAGE);
+		try {
+			if(userService.addUser(userInputer)){
+				response.setCode(ResponseCode.INSERT_SUCCESS);
+				response.setMessage(ResponseMessage.USER_MESSAGE);
 			// Save the file locally
 			BufferedOutputStream stream = null;
-			try {
+
 				stream = new BufferedOutputStream(new FileOutputStream(filepath));
 				stream.write(multipartFile.getBytes());
 				stream.close();
 				userDetailService.insertRole(userDetailService.getLastId(),userInputer.getRole_id());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+
 		}else{
 			response.setCode(ResponseCode.INSERT_FAIL);
 			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}
+		} catch (Exception e) {
+			response.setCode(ResponseCode.INSERT_FAIL);
+			response.setMessage(e.getMessage());
 		}
 		return response;
 	}
 
 	@PostMapping("/addFacebookAccount")
 	Response adduserWithFacebookAccount( @RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email
-								     	, @RequestParam("USER_PROFILE")String url_image, @RequestParam("USER_FACEBOOK_ID")String user_facebook_id){
+										 ,@RequestParam("PASSWORD")String password, @RequestParam("USER_PROFILE")String url_image,
+										 @RequestParam("USER_FACEBOOK_ID")String user_facebook_id){
 
 		Response response = new Response();
 
@@ -136,21 +155,24 @@ public class UserController {
 		userInputer.setUsername(username);
 		userInputer.setEmail(email);
 		userInputer.setImage(url_image);
+		userInputer.setPassword(password);
 		userInputer.setUser_facebook_id(user_facebook_id);
 		userInputer.setRole_id(1);
-
+		try {
 		if(userService.adduserWithFacebookAccount(userInputer)){
 			response.setCode(ResponseCode.INSERT_SUCCESS);
 			response.setMessage(ResponseMessage.USER_MESSAGE);
 			// Save the file locally\
-			try {
+
 				userDetailService.insertRole(userDetailService.getLastId(),userInputer.getRole_id());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+
 		}else{
 			response.setCode(ResponseCode.INSERT_FAIL);
 			response.setMessage(ResponseMessage.USER_MESSAGE);
+		}
+		} catch (Exception e) {
+			response.setCode(ResponseCode.INSERT_FAIL);
+			response.setMessage(e.getMessage());
 		}
 		return response;
 	}
@@ -179,7 +201,8 @@ public class UserController {
 				response.setMessage(ResponseMessage.USER_MESSAGE);
 			}
 		}catch (Exception e){
-			System.out.print(e);
+			response.setCode(ResponseCode.UPDATE_FAIL);
+			response.setMessage(e.getMessage());
 		}
 		return response;
 	}
@@ -189,12 +212,18 @@ public class UserController {
 
 		Response response = new Response();
 
-		if(userService.modifierUsername(username,user_id)){
-			response.setCode(ResponseCode.INSERT_SUCCESS);
-			response.setMessage(ResponseMessage.USER_MESSAGE);
-		}else{
+		try{
+			if(userService.modifierUsername(username,user_id)){
+				response.setCode(ResponseCode.INSERT_SUCCESS);
+				response.setMessage(ResponseMessage.USER_MESSAGE);
+			}else{
+				response.setCode(ResponseCode.INSERT_FAIL);
+				response.setMessage(ResponseMessage.USER_MESSAGE);
+			}
+		}
+		catch (Exception e){
 			response.setCode(ResponseCode.INSERT_FAIL);
-			response.setMessage(ResponseMessage.USER_MESSAGE);
+			response.setMessage(e.getMessage());
 		}
 		return response;
 	}
@@ -204,32 +233,46 @@ public class UserController {
 
 		Response response = new Response();
 
-		if(userService.modifierUsername(password,user_id)){
-			response.setCode(ResponseCode.INSERT_SUCCESS);
-			response.setMessage(ResponseMessage.USER_MESSAGE);
-		}else{
+		try{
+			if(userService.modifierUsername(password,user_id)){
+				response.setCode(ResponseCode.INSERT_SUCCESS);
+				response.setMessage(ResponseMessage.USER_MESSAGE);
+			}else{
+				response.setCode(ResponseCode.INSERT_FAIL);
+				response.setMessage(ResponseMessage.USER_MESSAGE);
+			}
+		}catch (Exception e){
 			response.setCode(ResponseCode.INSERT_FAIL);
-			response.setMessage(ResponseMessage.USER_MESSAGE);
+			response.setMessage(e.getMessage());
 		}
 		return response;
 	}
 
 	@PutMapping("/updateUser")
-	Response updateUser(@RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email, @RequestParam("PASSWORD") String password){
+	Response updateUser(@RequestParam("USER_ID")int user_id,@RequestParam("USERNAME") String username,
+						@RequestParam("EMAIL") String email,@RequestParam("PASSWORD") String password){
 
 		Response response = new Response();
 
-		UserInputer userInputer = new UserInputer();
-		userInputer.setUsername(username);
-		userInputer.setEmail(email);
-		userInputer.setPassword(password);
+		UserModifier userModifier = new UserModifier();
 
-		if(userService.addUser(userInputer)){
-			response.setCode(ResponseCode.INSERT_SUCCESS);
-			response.setMessage(ResponseMessage.USER_MESSAGE);
-		}else{
+		userModifier.setUser_id(user_id);
+		userModifier.setUsername(username);
+		userModifier.setEmail(email);
+		userModifier.setPassword(password);
+
+		try {
+			if(userService.update(userModifier)){
+				response.setCode(ResponseCode.INSERT_SUCCESS);
+				response.setMessage(ResponseMessage.USER_MESSAGE);
+			}else{
+				response.setCode(ResponseCode.INSERT_FAIL);
+				response.setMessage(ResponseMessage.USER_MESSAGE);
+			}
+		}
+		catch (Exception e){
 			response.setCode(ResponseCode.INSERT_FAIL);
-			response.setMessage(ResponseMessage.USER_MESSAGE);
+			response.setMessage(e.getMessage());
 		}
 		return response;
 	}
@@ -237,11 +280,17 @@ public class UserController {
 	@DeleteMapping("/removeUser")
 	Response removeUser(@RequestParam("USER_ID")int user_id){
 		Response response = new Response();
-		if(userService.remove(user_id)){
-			response.setCode(ResponseCode.DELETE_SUCCESS);
-			response.setMessage(ResponseMessage.USER_MESSAGE);
-		}else{
-			response.setMessage(ResponseMessage.USER_MESSAGE);
+		try{
+			if(userService.remove(user_id)){
+				response.setCode(ResponseCode.DELETE_SUCCESS);
+				response.setMessage(ResponseMessage.USER_MESSAGE);
+			}else{
+				response.setMessage(ResponseMessage.USER_MESSAGE);
+				response.setCode(ResponseCode.DELETE_FAIL);
+			}
+		}
+		catch (Exception e){
+			response.setMessage(e.getMessage());
 			response.setCode(ResponseCode.DELETE_FAIL);
 		}
 		return response;

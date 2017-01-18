@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1484723488254
+Build-Jdk: 1.8.0_111
+Built-By: rina
+Bundle-Activator: kh.com.kshrd.hikvision.HikvisionConsumer
+Bundle-Description: Parent pom providing dependency and plugin managemen
+ t for applications		built with Maven
+Bundle-DocURL: http://www.spring.io
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0
+Bundle-ManifestVersion: 2
+Bundle-Name: hikvision
+Bundle-SymbolicName: Hikvision
+Bundle-Vendor: HikVision
+Bundle-Version: 0.0.1.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: kh.com.kshrd.hikvision;uses:="kh.com.kshrd.core";version
+ ="0.0.1"
+Implementation-Title: hikvision
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Vendor-Id: kh.com.kshrd
+Implementation-Version: 0.0.1-SNAPSHOT
+Import-Package: kh.com.kshrd.core;version="[1.0,2)",org.apache.http,org.
+ apache.http.auth,org.apache.http.client,org.apache.http.client.methods,
+ org.apache.http.entity,org.apache.http.impl.client
+Main-Class: ${start-class}
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-3.2.0.201605172007

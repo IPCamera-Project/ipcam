@@ -56,9 +56,8 @@ public class ModelController {
                 }
             }
             catch (Exception e){
-                e.printStackTrace();
                 response.setCode(ResponseCode.QUERY_NOT_FOUND);
-                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+                response.setMessage(e.getMessage());
             }
 
         return response;
@@ -84,9 +83,8 @@ public class ModelController {
             }
         }
         catch (Exception e){
-            e.printStackTrace();
             response.setCode(ResponseCode.QUERY_NOT_FOUND);
-            response.setMessage(ResponseMessage.MODEL_MESSAGE);
+            response.setMessage(e.getMessage());
         }
 
         return response;
@@ -117,7 +115,7 @@ public class ModelController {
         }
         catch (Exception e){
             response.setCode(ResponseCode.QUERY_NOT_FOUND);
-            response.setMessage(ResponseMessage.MODEL_MESSAGE);
+            response.setMessage(e.getMessage());
         }
 
         return response;
@@ -172,7 +170,8 @@ public class ModelController {
             return  response;
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            response.setCode(ResponseCode.INSERT_FAIL);
+            response.setMessage(e.getMessage());
             return null;
         }
     }
@@ -208,22 +207,23 @@ public class ModelController {
             modelModifier.setPlugin_id(plugin_id);
             modelModifier.setStream_url(stream_url);
 
-
-        if(modelService.update(modelModifier)){
+        try {
+            if(modelService.update(modelModifier)){
             response.setMessage(ResponseCode.UPDATE_SUCCESS);
             response.setCode(ResponseMessage.MODEL_MESSAGE);
 
-            // Save the file locally
-          try {
               BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(filepath));
               stream.write(multipartFile.getBytes());
               stream.close();
-            } catch (IOException e) {e.printStackTrace();}
-        }
-        else {
-            response.setCode(ResponseMessage.MODEL_MESSAGE);
-            response.setMessage(ResponseCode.UPDATE_FAIL);
-        }
+             }
+             else {
+                response.setCode(ResponseMessage.MODEL_MESSAGE);
+                response.setMessage(ResponseCode.UPDATE_FAIL);
+              }
+           } catch (IOException e) {
+                    response.setCode(e.getMessage());
+                    response.setMessage(ResponseCode.UPDATE_FAIL);
+              }
         return response;
     }
 
@@ -233,13 +233,20 @@ public class ModelController {
     @ResponseBody
     public  Response removeModel(@RequestParam("model_id") int model_id){
         Response response = new Response();
-        if(modelService.remove(model_id)){
-            response.setMessage(ResponseCode.DELETE_SUCCESS);
-            response.setCode(ResponseMessage.MODEL_MESSAGE);
+
+        try{
+            if(modelService.remove(model_id)){
+                response.setMessage(ResponseCode.DELETE_SUCCESS);
+                response.setCode(ResponseMessage.MODEL_MESSAGE);
+            }
+            else {
+                response.setCode(ResponseMessage.MODEL_MESSAGE);
+                response.setMessage(ResponseCode.DELETE_FAIL);
+            }
         }
-        else {
+        catch (Exception e){
             response.setCode(ResponseMessage.MODEL_MESSAGE);
-            response.setMessage(ResponseCode.DELETE_FAIL);
+            response.setMessage(e.getMessage());
         }
         return response;
     }

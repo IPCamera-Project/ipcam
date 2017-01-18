@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1484723478456
+Build-Jdk: 1.8.0_111
+Built-By: rina
+Bundle-Description: Parent pom providing dependency and plugin managemen
+ t for applications		built with Maven
+Bundle-DocURL: http://www.spring.io
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0
+Bundle-ManifestVersion: 2
+Bundle-Name: kh.com.kshrd.core
+Bundle-SymbolicName: IPCamCore
+Bundle-Vendor: IPCamCore
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: kh.com.kshrd.core;version="1.0.0"
+Implementation-Title: kh.com.kshrd.core
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Vendor-Id: kh.com.kshrd
+Implementation-Version: 1.0-SNAPSHOT
+Import-Package: com.github.zafarkhaja.semver,com.github.zafarkhaja.semve
+ r.expr,org.slf4j;version="[1.7,2)"
+Main-Class: ${start-class}
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-3.2.0.201605172007
