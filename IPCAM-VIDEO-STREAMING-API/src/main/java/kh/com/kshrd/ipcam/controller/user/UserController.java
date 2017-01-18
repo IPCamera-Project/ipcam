@@ -124,15 +124,13 @@ public class UserController {
 
 	@PostMapping("/addFacebookAccount")
 	Response adduserWithFacebookAccount( @RequestParam("USERNAME") String username, @RequestParam("EMAIL") String email
-								     	,@RequestParam("PASSWORD") String password, @RequestParam("USER_PROFILE")String url_image,
-								 		 @RequestParam("USER_FACEBOOK_ID")String user_facebook_id){
+								     	, @RequestParam("USER_PROFILE")String url_image, @RequestParam("USER_FACEBOOK_ID")String user_facebook_id){
 
 		Response response = new Response();
 
 		UserInputer userInputer = new UserInputer();
 		userInputer.setUsername(username);
 		userInputer.setEmail(email);
-		userInputer.setPassword(password);
 		userInputer.setImage(url_image);
 		userInputer.setUser_facebook_id(user_facebook_id);
 		userInputer.setRole_id(1);
