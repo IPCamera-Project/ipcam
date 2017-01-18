@@ -61,7 +61,11 @@ public class UserController {
 		ResponseObject<User> userResponseObject = new ResponseObject<>();
 
 		User user = userService.getUserByEmail(email);
-		user.setImage(getFilePath(user.getImage()));
+		if(user.getImage().contains("http")){
+			user.setImage(user.getImage());
+		}else {
+			user.setImage(getFilePath(user.getImage()));
+		}
 		userResponseObject.setData(user);
 
 		if(userResponseObject!=null	){
