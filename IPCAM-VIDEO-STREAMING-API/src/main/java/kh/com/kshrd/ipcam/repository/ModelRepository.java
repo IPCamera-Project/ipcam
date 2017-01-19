@@ -56,7 +56,7 @@ public interface ModelRepository {
 			@Result(property="plugin",column = "plugin_id", one = @One(select = "kh.com.kshrd.ipcam.repository.PluginRepository.getPluginById")),
 			@Result(property="plugin_id", column="plugin_id")
 	})
-	public List<Model> getAllModel();
+	 ArrayList<Model> getAllModel();
 
 	@Insert(INSERT_NEW)
 	boolean addModel(ModelInputer modelInputer);

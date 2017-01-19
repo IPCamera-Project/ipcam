@@ -112,9 +112,8 @@ public class UserController {
 					 @RequestParam("ROLE_ID")  int role_id){
 
 		Response response = new Response();
-				System.out.print("fddkdfkdfkjdfkjdf"+multipartFile);
-		String genName =	fileNameGen(fileNameGen(multipartFile.getOriginalFilename()));
-
+				System.out.print("Mulitpar  "+multipartFile);
+		String genName =	fileNameGen(multipartFile.getOriginalFilename());
 		UserInputer userInputer = new UserInputer();
 			userInputer.setUsername(username);
 			userInputer.setEmail(email);
@@ -183,7 +182,7 @@ public class UserController {
 									@RequestParam("USER_ID")int user_id){
 
 		Response response = new Response();
-		String genName =	fileNameGen(fileNameGen(multipartFile.getOriginalFilename()));
+		String genName =	fileNameGen(multipartFile.getOriginalFilename());
 
 		try{
 			if(userService.updateUserImage(genName,user_id)){
@@ -302,18 +301,29 @@ public class UserController {
 	 * @Return new file Name gen
 	 */
 	String filepath;
-
 	String fileNameGen(String filename){
 
-		String[] output = filename.split("\\.");//split string specific "."
-		String randomFileName = UUID.randomUUID()+"."+"jpg";
-		randomFileName = randomFileName+"";
-		System.out.println(randomFileName);
-			String directory = environment.getProperty("file.upload.path");
-			filepath = Paths.get(directory, randomFileName).toString();
 
-
-
+		String directory = environment.getProperty("file.upload.path");
+		String randomFileName ="";
+		try {
+			File folder = new File(directory);
+			if (!folder.exists()) {
+				String[] output = filename.split("\\.");//split string specific "."
+				randomFileName = UUID.randomUUID() + "." + "jpg";
+				randomFileName = randomFileName + "";
+				folder.mkdir();
+				filepath = Paths.get(directory, randomFileName).toString();
+			}else {
+				String[] output = filename.split("\\.");//split string specific "."
+				randomFileName = UUID.randomUUID() + "." + "jpg";
+				randomFileName = randomFileName + "";
+				filepath = Paths.get(directory, randomFileName).toString();
+			}
+		}
+			catch(SecurityException se){
+				se.printStackTrace();
+			}
 		return randomFileName;
 	}
 	/**
