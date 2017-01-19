@@ -234,7 +234,7 @@ public class UserController {
 		Response response = new Response();
 
 		try{
-			if(userService.modifierUsername(password,user_id)){
+			if(userService.modifierPassword(password,user_id)){
 				response.setCode(ResponseCode.INSERT_SUCCESS);
 				response.setMessage(ResponseMessage.USER_MESSAGE);
 			}else{
