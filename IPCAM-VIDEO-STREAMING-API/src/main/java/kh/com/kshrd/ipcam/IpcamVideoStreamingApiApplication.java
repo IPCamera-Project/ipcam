@@ -14,10 +14,14 @@ import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@PropertySource("classpath:application.properties")
+//@PropertySource("classpath:application.properties")
+@EnableWebMvc
+//@ComponentScan({"kh.com.kshrd.ipcam.configuration.swagger","kh.com.kshrd.ipcam.controller"})
+//@EntityScan(value = "kh.com.kshrd.ipcam.entity")
 public class IpcamVideoStreamingApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IpcamVideoStreamingApiApplication.class, args);
