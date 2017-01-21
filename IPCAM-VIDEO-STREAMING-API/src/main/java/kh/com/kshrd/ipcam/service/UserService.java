@@ -42,6 +42,13 @@ public class UserService  {
 
     public boolean addUser(UserInputer object) {return userRepository.addUser(object);}
 
+    public boolean modifierUsername(String username,int user_id) {return userRepository.modifierUserName(username,user_id);}
+
+    public boolean modifierPassword(String password,int user_id) {return userRepository.modifierUserPassword(password,user_id);}
+
+
+    public boolean adduserWithFacebookAccount(UserInputer object) {return userRepository.adduserWithFacebookAccount(object);}
+
     public boolean emailChecker(String email){
         return userRepository.emailChecker(email);
     }

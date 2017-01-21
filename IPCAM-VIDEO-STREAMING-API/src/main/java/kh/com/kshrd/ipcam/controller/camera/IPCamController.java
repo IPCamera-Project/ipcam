@@ -31,14 +31,20 @@ public class IPCamController {
 		ArrayList<IPCam> data=(ArrayList<IPCam>) service.findAll();
 		ResponseList<IPCam> res=new ResponseList<IPCam>();
 		
-		if(data.size()>0){
-			res.setCode(ResponseCode.QUERY_FOUND);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
-			res.setData(data);
+		try {
+			if(data.size()>0){
+				res.setCode(ResponseCode.QUERY_FOUND);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+				res.setData(data);
+			}
+			else{
+				res.setCode(ResponseCode.QUERY_NOT_FOUND);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
 		}
-		else{
+		catch (Exception e){
 			res.setCode(ResponseCode.QUERY_NOT_FOUND);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			res.setMessage(e.getMessage());
 		}
 		return res;
 	}
@@ -47,15 +53,19 @@ public class IPCamController {
 	public ResponseList<IPCam> getCameraByUserId(@RequestParam("USER_ID")int user_id){
 		ArrayList<IPCam> data=(ArrayList<IPCam>) service.findCameraByUserId(user_id);
 		ResponseList<IPCam> res=new ResponseList<IPCam>();
-
-		if(data.size()>0){
-			res.setCode(ResponseCode.QUERY_FOUND);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
-			res.setData(data);
-		}
-		else{
+		try{
+			if(data.size()>0){
+				res.setCode(ResponseCode.QUERY_FOUND);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+				res.setData(data);
+			}
+			else{
+				res.setCode(ResponseCode.QUERY_NOT_FOUND);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
+		}catch (Exception e){
 			res.setCode(ResponseCode.QUERY_NOT_FOUND);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			res.setMessage(e.getMessage());
 		}
 		return res;
 	}
@@ -65,14 +75,20 @@ public class IPCamController {
 	{
 		IPCam data= service.findOne(id);
 		ResponseObject<IPCam> res=new ResponseObject<IPCam>();
-		if(data != null){
-			res.setCode(ResponseCode.QUERY_FOUND);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
-			res.setData(data);
+		try{
+			if(data != null){
+				res.setCode(ResponseCode.QUERY_FOUND);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+				res.setData(data);
+			}
+			else{
+				res.setCode(ResponseCode.QUERY_NOT_FOUND);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
 		}
-		else{
+		catch (Exception e){
 			res.setCode(ResponseCode.QUERY_NOT_FOUND);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			res.setMessage(e.getMessage());
 		}
 		return res;
 	}
@@ -84,13 +100,19 @@ public class IPCamController {
 		Response res=new Response();
 
 
-		if(service.remove(id)){
-			res.setCode(ResponseCode.DELETE_SUCCESS);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+		try {
+			if(service.remove(id)){
+				res.setCode(ResponseCode.DELETE_SUCCESS);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
+			else{
+				res.setCode(ResponseCode.DELETE_FAIL);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
 		}
-		else{
+		catch (Exception e){
 			res.setCode(ResponseCode.DELETE_FAIL);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			res.setMessage(e.getMessage());
 		}
 		return res;
 	}
@@ -99,13 +121,19 @@ public class IPCamController {
 	public Response insertCamera(@RequestBody IPCameraInputer ipCam)
 	{
 		Response res=new Response();
-		if(service.save(ipCam)){
-			res.setCode(ResponseCode.INSERT_SUCCESS);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+		try {
+			if(service.save(ipCam)){
+				res.setCode(ResponseCode.INSERT_SUCCESS);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
+			else{
+				res.setCode(ResponseCode.INSERT_FAIL);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
 		}
-		else{
+		catch (Exception e){
 			res.setCode(ResponseCode.INSERT_FAIL);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			res.setMessage(e.getMessage());
 		}
 		
 		return res;
@@ -116,26 +144,23 @@ public class IPCamController {
 	public Response updateCameraByID(@RequestBody IPCameraModifier ipCameraModifier)
 	{
 		Response res=new Response();
-		System.out.print(ipCameraModifier.getCamera_id());
-		System.out.print(ipCameraModifier.getIp_address());
-		System.out.print(ipCameraModifier.getName());
-		System.out.print(ipCameraModifier.getPassword());
-		System.out.print(ipCameraModifier.getUsername());
-		System.out.print(ipCameraModifier.getIp_address());
-		System.out.print(ipCameraModifier.getWeb_port());
-		System.out.print(ipCameraModifier.getRtsp_port());
-		System.out.print(ipCameraModifier.getModel_id());
 
 
-		if(service.update(ipCameraModifier))
-		{
-			res.setCode(ResponseCode.UPDATE_SUCCESS);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+		try{
+			if(service.update(ipCameraModifier))
+			{
+				res.setCode(ResponseCode.UPDATE_SUCCESS);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
+			else
+			{
+				res.setCode(ResponseCode.UPDATE_FAIL);
+				res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			}
 		}
-		else
-		{
+		catch (Exception e){
 			res.setCode(ResponseCode.UPDATE_FAIL);
-			res.setMessage(ResponseMessage.CAMERA_MESSAGE);
+			res.setMessage(e.getMessage());
 		}
 	
 		return res;

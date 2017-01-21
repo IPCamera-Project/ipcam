@@ -1,6 +1,8 @@
 package kh.com.kshrd.ipcam.controller.camera;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
+
+import java.io.File;
 import java.lang.String;
 import kh.com.kshrd.ipcam.entity.camera.Model;
 import kh.com.kshrd.ipcam.entity.form.ModelInputer;
@@ -37,18 +39,13 @@ public class ModelController {
     @ResponseBody
     public ResponseObject<Model> getAllModel(){
         ResponseObject<Model> response  = new ResponseObject<>();
-        List<Model> list = modelService.getAllModel();
-        List<Model> modelArrayList = new ArrayList<>();
-            for(Model model : list) {
-                String directory = environment.getProperty("file.getImage.path");
-                model.setImage(directory+"/"+model.getImage());
-                modelArrayList.add(model);
-            }
+        ArrayList<Model> list = modelService.getAllModel();
+        ArrayList<Model>  mainList = getListModel(list);
             try{
-                if(modelArrayList!=null){
+                if(mainList!=null){
                     response.setCode(ResponseCode.QUERY_FOUND);
                     response.setMessage(ResponseMessage.MODEL_MESSAGE);
-                    response.setData(modelArrayList);
+                    response.setData(mainList);
                 }
                 else {
                     response.setCode(ResponseCode.QUERY_NOT_FOUND);
@@ -56,9 +53,8 @@ public class ModelController {
                 }
             }
             catch (Exception e){
-                e.printStackTrace();
                 response.setCode(ResponseCode.QUERY_NOT_FOUND);
-                response.setMessage(ResponseMessage.MODEL_MESSAGE);
+                response.setMessage(e.getMessage());
             }
 
         return response;
@@ -70,13 +66,13 @@ public class ModelController {
     @ResponseBody
     public ResponseList<Model> getModelNameByVenderName(@RequestParam("VENDER_NAME")String vender_name){
         ResponseList<Model> response = new ResponseList<>();
-        ArrayList<Model> modelName = modelService.getAllModelName(vender_name);
-
+        ArrayList<Model> listModel = modelService.getAllModelName(vender_name);
+        ArrayList<Model> mainList = getListModel(listModel);
         try{
-            if(modelName!=null){
+            if(mainList!=null){
                 response.setCode(ResponseCode.QUERY_FOUND);
                 response.setMessage(ResponseMessage.MODEL_MESSAGE);
-                response.setData(modelName);
+                response.setData(mainList);
             }
             else {
                 response.setCode(ResponseCode.QUERY_NOT_FOUND);
@@ -84,9 +80,8 @@ public class ModelController {
             }
         }
         catch (Exception e){
-            e.printStackTrace();
             response.setCode(ResponseCode.QUERY_NOT_FOUND);
-            response.setMessage(ResponseMessage.MODEL_MESSAGE);
+            response.setMessage(e.getMessage());
         }
 
         return response;
@@ -102,8 +97,10 @@ public class ModelController {
         try {
             Model model = modelService.getModelById(model_id);
 
-            String directory = environment.getProperty("file.getImage.path");
-            model.setImage(directory+"/"+model.getImage());
+            if(!model.getImage().contains("http")){
+                String directory = environment.getProperty("file.getImage.path");
+                model.setImage(directory+"/"+model.getImage());
+            }
 
             if(model!=null){
                 response.setCode(ResponseCode.QUERY_FOUND);
@@ -117,7 +114,7 @@ public class ModelController {
         }
         catch (Exception e){
             response.setCode(ResponseCode.QUERY_NOT_FOUND);
-            response.setMessage(ResponseMessage.MODEL_MESSAGE);
+            response.setMessage(e.getMessage());
         }
 
         return response;
@@ -136,18 +133,10 @@ public class ModelController {
 
         Response response = new Response();
 
-        String   filename = multipartFile.getOriginalFilename();
-        String[] output = filename.split("\\.");//split string specific "."
-        String randomFileName = UUID.randomUUID()+"."+output[1];
-        randomFileName = randomFileName+"";
-
-        String directory = environment.getProperty("file.upload.path");
-        String filepath = Paths.get(directory, randomFileName).toString();
-
         ModelInputer modelInputer = new ModelInputer();
         modelInputer.setName(name);
         modelInputer.setVender_id(vender_id);
-        modelInputer.setImage(randomFileName);
+        modelInputer.setImage(fileNameGen(multipartFile.getOriginalFilename()));
         modelInputer.setPlugin_id(plugin_id);
         modelInputer.setStream_url(stream_url);
 
@@ -172,7 +161,8 @@ public class ModelController {
             return  response;
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            response.setCode(ResponseCode.INSERT_FAIL);
+            response.setMessage(e.getMessage());
             return null;
         }
     }
@@ -192,38 +182,32 @@ public class ModelController {
 
         Response response = new Response();
 
-        String   filename = multipartFile.getOriginalFilename();
-        String[] output = filename.split("\\.");//split string specific "."
-        String randomFileName = UUID.randomUUID()+"."+output[1];
-        randomFileName = randomFileName+"";
-
-        String directory = environment.getProperty("file.upload.path");
-        String filepath = Paths.get(directory, randomFileName).toString();
 
         ModelModifier modelModifier = new ModelModifier();
             modelModifier.setModel_id(model_id);
             modelModifier.setName(name);
             modelModifier.setVender_id(vender_id);
-            modelModifier.setImage(randomFileName);
+            modelModifier.setImage(fileNameGen(multipartFile.getOriginalFilename()));
             modelModifier.setPlugin_id(plugin_id);
             modelModifier.setStream_url(stream_url);
 
-
-        if(modelService.update(modelModifier)){
+        try {
+            if(modelService.update(modelModifier)){
             response.setMessage(ResponseCode.UPDATE_SUCCESS);
             response.setCode(ResponseMessage.MODEL_MESSAGE);
 
-            // Save the file locally
-          try {
               BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(filepath));
               stream.write(multipartFile.getBytes());
               stream.close();
-            } catch (IOException e) {e.printStackTrace();}
-        }
-        else {
-            response.setCode(ResponseMessage.MODEL_MESSAGE);
-            response.setMessage(ResponseCode.UPDATE_FAIL);
-        }
+             }
+             else {
+                response.setCode(ResponseMessage.MODEL_MESSAGE);
+                response.setMessage(ResponseCode.UPDATE_FAIL);
+              }
+           } catch (IOException e) {
+                    response.setCode(e.getMessage());
+                    response.setMessage(ResponseCode.UPDATE_FAIL);
+              }
         return response;
     }
 
@@ -233,15 +217,75 @@ public class ModelController {
     @ResponseBody
     public  Response removeModel(@RequestParam("model_id") int model_id){
         Response response = new Response();
-        if(modelService.remove(model_id)){
-            response.setMessage(ResponseCode.DELETE_SUCCESS);
-            response.setCode(ResponseMessage.MODEL_MESSAGE);
+
+        try{
+            if(modelService.remove(model_id)){
+                response.setMessage(ResponseCode.DELETE_SUCCESS);
+                response.setCode(ResponseMessage.MODEL_MESSAGE);
+            }
+            else {
+                response.setCode(ResponseMessage.MODEL_MESSAGE);
+                response.setMessage(ResponseCode.DELETE_FAIL);
+            }
         }
-        else {
+        catch (Exception e){
             response.setCode(ResponseMessage.MODEL_MESSAGE);
-            response.setMessage(ResponseCode.DELETE_FAIL);
+            response.setMessage(e.getMessage());
         }
         return response;
     }
 
+    /**
+     *@Method fileNameGen
+     * @Return new file Name gen
+     */
+    String filepath;
+    String fileNameGen(String filename){
+        String directory = environment.getProperty("file.upload.path");
+        String randomFileName ="";
+        try {
+            File folder = new File(directory);
+            if (!folder.exists()) {
+                String[] output = filename.split("\\.");//split string specific "."
+                randomFileName = UUID.randomUUID() + "." + "jpg";
+                randomFileName = randomFileName + "";
+                folder.mkdir();
+                filepath = Paths.get(directory, randomFileName).toString();
+            }else {
+                String[] output = filename.split("\\.");//split string specific "."
+                randomFileName = UUID.randomUUID() + "." + "jpg";
+                randomFileName = randomFileName + "";
+                filepath = Paths.get(directory, randomFileName).toString();
+            }
+        }
+        catch(SecurityException se){
+            se.printStackTrace();
+        }
+        return randomFileName;
+    }
+    /**
+     * @Method to get file directory
+     */
+    String getFilePath(String fileName){
+        String directory = environment.getProperty("file.getImage.path");
+        System.out.print("images"+directory);
+        filepath = Paths.get(directory, fileName).toString();
+
+        return filepath;
+    }
+
+    ArrayList<Model> getListModel(ArrayList<Model> defaulList){
+        ArrayList<Model> modelist = new ArrayList<Model>();
+        for(Model model:defaulList){
+            if(!model.getImage().contains("http")){
+                String directory = environment.getProperty("file.getImage.path");
+                model.setImage(directory+"/"+model.getImage());
+                modelist.add(model);
+            }
+            else {
+                modelist.add(model);
+            }
+        }
+        return modelist;
+    }
 }

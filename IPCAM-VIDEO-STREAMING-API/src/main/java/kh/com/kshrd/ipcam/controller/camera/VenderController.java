@@ -25,14 +25,20 @@ public class VenderController {
     @GetMapping("/getAllVender")
     ResponseList<Vender> getAlLVender(){
         ResponseList<Vender> response = new ResponseList<Vender>();
-        if(venderService.getAllVender()!=null){
-            response.setCode(ResponseCode.QUERY_FOUND);
-            response.setMessage(ResponseMessage.VENDER_MESSAGE);
-            response.setData(venderService.getAllVender());
+        try {
+            if(venderService.getAllVender()!=null){
+                response.setCode(ResponseCode.QUERY_FOUND);
+                response.setMessage(ResponseMessage.VENDER_MESSAGE);
+                response.setData(venderService.getAllVender());
+            }
+            else {
+                response.setCode(ResponseCode.QUERY_NOT_FOUND);
+                response.setMessage(ResponseMessage.VENDER_MESSAGE);
+            }
         }
-        else {
+        catch (Exception e){
             response.setCode(ResponseCode.QUERY_NOT_FOUND);
-            response.setMessage(ResponseMessage.VENDER_MESSAGE);
+            response.setMessage(e.getMessage());
         }
         return response;
     }
@@ -41,41 +47,59 @@ public class VenderController {
     ResponseObject<Vender> getVenderById(@RequestParam("VENDER_ID")int vender_id){
         ResponseObject<Vender> response = new ResponseObject<Vender>();
 
-        if(venderService.getVenderById(vender_id)!=null){
-            response.setCode(ResponseCode.QUERY_FOUND);
-            response.setMessage(ResponseMessage.VENDER_MESSAGE);
-            response.setData(venderService.getVenderById(vender_id));
-        }
-        else {
-            response.setCode(ResponseCode.QUERY_NOT_FOUND);
-            response.setMessage(ResponseMessage.VENDER_MESSAGE);
-        }
+       try{
+           if(venderService.getVenderById(vender_id)!=null){
+               response.setCode(ResponseCode.QUERY_FOUND);
+               response.setMessage(ResponseMessage.VENDER_MESSAGE);
+               response.setData(venderService.getVenderById(vender_id));
+           }
+           else {
+               response.setCode(ResponseCode.QUERY_NOT_FOUND);
+               response.setMessage(ResponseMessage.VENDER_MESSAGE);
+           }
+       }
+       catch (Exception e){
+           response.setCode(ResponseCode.QUERY_NOT_FOUND);
+           response.setMessage(e.getMessage());
+       }
         return response;
     }
 
     @PostMapping("/addNewVender")
     Response addNewVender(@RequestBody VenderInputer venderInputer){
         Response response = new Response() ;
-            if(venderService.addNewVender(venderInputer)){
-                response.setCode(ResponseCode.INSERT_SUCCESS);
-                response.setMessage(ResponseMessage.VENDER_MESSAGE);
-            }
-            else {
-                response.setMessage(ResponseMessage.VENDER_MESSAGE);
-                response.setCode(ResponseCode.INSERT_FAIL);
-            }
+           try{
+               if(venderService.addNewVender(venderInputer)){
+                   response.setCode(ResponseCode.INSERT_SUCCESS);
+                   response.setMessage(ResponseMessage.VENDER_MESSAGE);
+               }
+               else {
+                   response.setMessage(ResponseMessage.VENDER_MESSAGE);
+                   response.setCode(ResponseCode.INSERT_FAIL);
+               }
+           }
+           catch (Exception e){
+               response.setMessage(e.getMessage());
+               response.setCode(ResponseCode.INSERT_FAIL);
+           }
             return response;
     }
 
     @PutMapping("/updateVender")
     Response updateVender(@RequestBody Vender vender){
         Response response = new Response() ;
-        if(venderService.updateVender(vender)){
-            response.setCode(ResponseCode.UPDATE_SUCCESS);
-            response.setMessage(ResponseMessage.VENDER_MESSAGE);
+        try{
+            if(venderService.updateVender(vender)){
+                response.setCode(ResponseCode.UPDATE_SUCCESS);
+                response.setMessage(ResponseMessage.VENDER_MESSAGE);
+            }
+            else {
+                response.setMessage(ResponseMessage.VENDER_MESSAGE);
+                response.setCode(ResponseCode.UPDATE_FAIL);
+            }
         }
-        else {
-            response.setMessage(ResponseMessage.VENDER_MESSAGE);
+        catch (Exception e){
+            response.setMessage(e.getMessage());
             response.setCode(ResponseCode.UPDATE_FAIL);
         }
         return response;
@@ -84,12 +108,18 @@ public class VenderController {
     @DeleteMapping("/removeVender")
     Response removeVender(@RequestParam("VENDER_ID") int vender_id){
         Response response = new Response() ;
-        if(venderService.removeVender(vender_id)){
-            response.setCode(ResponseCode.DELETE_SUCCESS);
-            response.setMessage(ResponseMessage.VENDER_MESSAGE);
+        try {
+            if(venderService.removeVender(vender_id)){
+                response.setCode(ResponseCode.DELETE_SUCCESS);
+                response.setMessage(ResponseMessage.VENDER_MESSAGE);
+            }
+            else {
+                response.setMessage(ResponseMessage.VENDER_MESSAGE);
+                response.setCode(ResponseCode.DELETE_FAIL);
+            }
         }
-        else {
-            response.setMessage(ResponseMessage.VENDER_MESSAGE);
+        catch (Exception e){
+            response.setMessage(e.getMessage());
             response.setCode(ResponseCode.DELETE_FAIL);
         }
         return response;
