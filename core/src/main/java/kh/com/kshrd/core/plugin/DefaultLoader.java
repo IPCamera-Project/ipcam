@@ -7,12 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Enumeration;
-import java.util.Properties;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * Created by sophatvathana on 20/12/16.
@@ -21,7 +20,12 @@ public class DefaultLoader implements PluginManager {
     private static final Logger log = LoggerFactory.getLogger(DefaultLoader.class);
     public static final String DEFAULT_PLUGINS_DIRECTORY = "plugins";
     protected File pluginLocation;
+    private String plugindir;
     private static DefaultLoader defaultLoader;
+
+    public void setPluginDir(String dir){
+        this.plugindir = dir;
+    }
 
     public static DefaultLoader getInstance(File pluginLocation){
         if (defaultLoader == null)
@@ -37,23 +41,51 @@ public class DefaultLoader implements PluginManager {
 
     private DefaultLoader(){
         pluginLocation = createDirectory();
-        initializer();
+        try {
+            initializer();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private DefaultLoader(File pluginLocation){
         this.pluginLocation = pluginLocation;
+        try {
+            initializer();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initializer() {
+    private void initializer() throws ClassNotFoundException, IOException {
+        JarFile jarFile = new JarFile(new File(this.pluginLocation.getAbsolutePath()+"lib/"));
+        Enumeration<JarEntry> e = jarFile.entries();
+
+        URL[] urls = { new URL("jar:file:" + new File(this.pluginLocation.getAbsolutePath()+"lib/")+"!/") };
+        URLClassLoader cl = URLClassLoader.newInstance(urls);
+
+        while (e.hasMoreElements()) {
+            JarEntry je = e.nextElement();
+            if(je.isDirectory() || !je.getName().endsWith(".class")){
+                continue;
+            }
+            // -6 because of .class
+            String className = je.getName().substring(0,je.getName().length()-6);
+            className = className.replace('/', '.');
+            Class c = cl.loadClass(className);
+        }
     }
 
     private File createDirectory() {
-        String pluginsDir = System.getProperty("kshrd.plugindir");
-        if (pluginsDir == null) {
-           pluginsDir = DEFAULT_PLUGINS_DIRECTORY;
+        //String pluginsDir = System.getProperty("kshrd.plugindir");
+        if (this.plugindir == null) {
+           this.plugindir = DEFAULT_PLUGINS_DIRECTORY;
         }
-
-        return new File(pluginsDir);
+        return new File(this.plugindir);
     }
 
     @Override

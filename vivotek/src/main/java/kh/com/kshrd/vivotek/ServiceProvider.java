@@ -26,46 +26,47 @@ public class ServiceProvider extends Command {
     CloseableHttpClient httpclient;
 
 
-    private HttpGet makeRequest(String move) {
-        return new HttpGet(String.format("http://%s%s/cgi-bin/camctrl/camctrl.cgi?move=" + move, host, port == 80? "": String.format(":%d", port)));
+    private HttpGet makeRequest(String move, Boolean isZoom) {
+        return new HttpGet(String.format("http://%s%s/cgi-bin/camctrl/camctrl.cgi?%s=" + move, host, port == 80? "": String.format(":%d", port), isZoom?"zoom":"move"));
     }
 
 
     @Override
     public boolean left() {
-        return executeCommand("left","left");
+        return executeCommand("left","left", false);
     }
 
     @Override
     public boolean right() {
-        return executeCommand("right","right");
+        return executeCommand("right","right", false);
     }
 
     @Override
     public boolean up() {
-        return executeCommand("up","up");
+        return executeCommand("up","up", false);
     }
 
     @Override
     public boolean down() {
-        return executeCommand("down","down");
+        return executeCommand("down","down", false);
     }
 
     @Override
     public boolean zoomIn() {
-        return executeCommand("zoom in","tele");
+        return executeCommand("zoom in","tele", true);
     }
 
     @Override
     public boolean zoomOut() {
-        return executeCommand("wide","wide");
+        return executeCommand("wide","wide", true);
     }
 
-    private boolean executeCommand(String msg, String command) {
-        boolean rslt = false;
-        HttpGet req = makeRequest(command);
+    private boolean executeCommand(String msg, String command, boolean isZoom) {
+        boolean rslt = true;
+        HttpGet req = makeRequest(command, isZoom);
         System.out.println(req);
         org.apache.http.entity.StringEntity ent = new org.apache.http.entity.StringEntity(msg, "UTF-8");
+        if(rslt)
         try {
 
             CloseableHttpResponse response2 = httpclient.execute(req);
@@ -81,6 +82,7 @@ public class ServiceProvider extends Command {
                 }
                 rslt = (response2.getStatusLine().getStatusCode() >=200 &&
                         response2.getStatusLine().getStatusCode()< 300);
+                System.out.println(rslt);
             } finally {
                 response2.close();
             }
@@ -92,7 +94,7 @@ public class ServiceProvider extends Command {
     }
     @Override
     public  boolean stop(){
-        return executeCommand("down","stop");
+        return executeCommand("down","stop", false);
     }
 
     @Override

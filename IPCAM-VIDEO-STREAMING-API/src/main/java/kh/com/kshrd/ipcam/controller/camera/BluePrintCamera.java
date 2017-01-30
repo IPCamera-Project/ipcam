@@ -1,12 +1,7 @@
 package kh.com.kshrd.ipcam.controller.camera;
 
 import kh.com.kshrd.core.plugin.PluginStateEvent;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+
 
 /**
  * Created by sophatvathana on 23/12/16.

@@ -1,6 +1,5 @@
 package kh.com.kshrd.hikvision;
 import kh.com.kshrd.core.Command;
-import kh.com.kshrd.core.exceptions.SystemException;
 import org.apache.http.HttpEntity;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -10,7 +9,6 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 

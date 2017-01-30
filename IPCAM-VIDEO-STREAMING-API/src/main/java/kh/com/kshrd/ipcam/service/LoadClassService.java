@@ -12,7 +12,10 @@ import kh.com.kshrd.ipcam.entity.user.User;
 import kh.com.kshrd.ipcam.service.impl.IPCamServiceImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
 
 /**
  * Created by sophatvathana on 22/12/16.
@@ -27,6 +30,9 @@ public class LoadClassService {
     @Autowired
     private IPCamServiceImpl ipCamService;
 
+    @Autowired
+    private Environment environment;
+
     public Tuple<PluginStateEvent, IPCam> loadClassService(String email, int camera) {
       /*  Integer speed = Integer.parseInt(sp);*/
 
@@ -37,10 +43,11 @@ public class LoadClassService {
         System.out.println(ipCam.getModel().getPlugin().getPlugin_name());
 //        Plugin plugin = pluginService.findOne(ipCam.getModel().getPlugin_id());
         PluginLoadClass pluginLoadClass = new PluginLoadClass();
+        System.out.println(environment.getProperty("kshrd.plugindir"));
         log.debug("This is file name {}", StringUtils.formatFileName(ipCam.getModel().getPlugin().getPlugin_name(),
                 ipCam.getModel().getPlugin().getPlugin_version(),
                 ipCam.getModel().getPlugin().getPlugin_release()));
-        DefaultLoader.getInstance().loadPlugin(StringUtils.formatFileName(ipCam.getModel().getPlugin().getPlugin_name(),
+        DefaultLoader.getInstance(new File(environment.getProperty("kshrd.plugindir"))).loadPlugin(StringUtils.formatFileName(ipCam.getModel().getPlugin().getPlugin_name(),
                 ipCam.getModel().getPlugin().getPlugin_version(),
                 ipCam.getModel().getPlugin().getPlugin_release()), pluginLoadClass);
         Transformer transformer = new Transformer(pluginLoadClass);

@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>provided</scope>
+			<!--<scope>provided</scope>-->
 		</dependency>
 
 		<dependency>
@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
+			<!--<scope>provided</scope>-->
 		</dependency>
 
 		<!--Persistent Framework-->
@@ -142,9 +142,9 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.2</version>
-
 		</dependency>
-        <dependency>
+
+		<dependency>
             <groupId>kh.com.kshrd</groupId>
             <artifactId>kh.com.kshrd.core</artifactId>
             <version>1.0-SNAPSHOT</version>
