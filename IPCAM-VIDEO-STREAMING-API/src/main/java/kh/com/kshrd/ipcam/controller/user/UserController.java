@@ -178,19 +178,18 @@ public class UserController {
 
 
 	@PutMapping("/updateUserImage")
-	public Response updateUserImage(@RequestParam("IMAGE")MultipartFile multipartFile,
+	public ResponseObject<String> updateUserImage(@RequestParam("IMAGE")MultipartFile multipartFile,
 									@RequestParam("USER_ID")int user_id){
 
-		Response response = new Response();
-		String genName =	fileNameGen(multipartFile.getOriginalFilename());
+		ResponseObject<String> response = new ResponseObject<String>();
+		String genName = fileNameGen(multipartFile.getOriginalFilename());
 
 		try{
 			if(userService.updateUserImage(genName,user_id)){
-				// Save the file locally
 				BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(filepath));
 				stream.write(multipartFile.getBytes());
 				stream.close();
-
+                response.setData(getFilePath(genName));
 				response.setCode(ResponseCode.UPDATE_SUCCESS);
 				response.setMessage(ResponseMessage.USER_MESSAGE);
 			}

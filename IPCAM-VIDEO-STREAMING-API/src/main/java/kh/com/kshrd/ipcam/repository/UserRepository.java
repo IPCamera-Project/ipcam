@@ -35,7 +35,7 @@ public interface UserRepository {
 	final String INSERT_FACEBOOK_ACCOUNT = "INSERT INTO tbl_user(username,email,password,image,user_facebook_id) " +
 			"VALUES(#{username},#{email},#{password},#{image},#{user_facebook_id})";
 
-	final String UPDATE_USER = "UPDATE tbl_user set (#{username,},#{password},#{email}) " +
+	final String UPDATE_USER = "UPDATE tbl_user set username= #{username},password = #{password},email= #{email} " +
 			"WHERE user_id = #{user_id}";
 
 	final String UPDATE_USER_NAME = "UPDATE tbl_user set username= #{username} " +

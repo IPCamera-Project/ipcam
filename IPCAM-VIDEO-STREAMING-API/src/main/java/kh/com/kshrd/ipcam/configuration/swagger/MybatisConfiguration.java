@@ -37,11 +37,15 @@ public class MybatisConfiguration {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("org.postgresql.Driver");
+      /*  dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost/ipcam");//120.136.24.174/IPCAM_MANAGEMENT_DB
         dataSource.setUsername("postgres");//IPCAM_USER
-        dataSource.setPassword("Q");
-        
+        dataSource.setPassword("Q");*/
+
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://120.136.24.174:5432/IPCAM_MANAGEMENT_DB");//120.136.24.174//IPCAM_MANAGEMENT_DB
+        dataSource.setUsername("IPCAM_USER");//IPCAM_USER
+        dataSource.setPassword("IPCAM_USER");
         /*dataSource.setUrl("jdbc:postgresql://localhost/cctv");
         dataSource.setUsername("postgres");
         dataSource.setPassword("123456");*/
